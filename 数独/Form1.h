@@ -42,6 +42,8 @@ namespace 数独 {
 	private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem8;
 	private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem9;
 	private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem10;
+	private: System::Windows::Forms::ContextMenuStrip^  contextMenuStrip2;
+	private: System::Windows::Forms::ToolStripMenuItem^  resetijToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  mi_manage;
 
 
@@ -117,8 +119,11 @@ namespace 数独 {
 			this->toolStripMenuItem8 = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->toolStripMenuItem9 = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->toolStripMenuItem10 = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->contextMenuStrip2 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
+			this->resetijToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->menuStrip1->SuspendLayout();
 			this->contextMenuStrip1->SuspendLayout();
+			this->contextMenuStrip2->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// menuStrip1
@@ -143,6 +148,7 @@ namespace 数独 {
 			this->mi_restart->Name = L"mi_restart";
 			this->mi_restart->Size = System::Drawing::Size(124, 22);
 			this->mi_restart->Text = L"重新开始";
+			this->mi_restart->Click += gcnew System::EventHandler(this, &Form1::mi_restart_Click);
 			// 
 			// mi_is_showtip
 			// 
@@ -240,6 +246,19 @@ namespace 数独 {
 			this->toolStripMenuItem10->Text = L"9";
 			this->toolStripMenuItem10->Click += gcnew System::EventHandler(this, &Form1::handle_play);
 			// 
+			// contextMenuStrip2
+			// 
+			this->contextMenuStrip2->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) {this->resetijToolStripMenuItem});
+			this->contextMenuStrip2->Name = L"contextMenuStrip2";
+			this->contextMenuStrip2->Size = System::Drawing::Size(153, 48);
+			// 
+			// resetijToolStripMenuItem
+			// 
+			this->resetijToolStripMenuItem->Name = L"resetijToolStripMenuItem";
+			this->resetijToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->resetijToolStripMenuItem->Text = L"取消填入";
+			this->resetijToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::resetijToolStripMenuItem_Click);
+			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 12);
@@ -255,6 +274,7 @@ namespace 数独 {
 			this->menuStrip1->ResumeLayout(false);
 			this->menuStrip1->PerformLayout();
 			this->contextMenuStrip1->ResumeLayout(false);
+			this->contextMenuStrip2->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -318,11 +338,14 @@ private: System::Void label1_MouseClick(System::Object^  sender, System::Windows
 			 if(i<1 || i>9 || j<1 || j>9)
 				 return;
 			 Algorithm::SD sd = p_sd->get()[j][i];
-			 if(sd.num)
-				 return;
 			 this->i = j;
 			 this->j = i;
-			 if(mi_is_showtip->Checked)
+			 if(sd.num)
+			 {
+				 if(sd.who)
+					contextMenuStrip2->Show(label1, e->X, e->Y);
+			 }
+			 else if(mi_is_showtip->Checked)
 			 {
 				 System::Windows::Forms::ContextMenuStrip^ context = gcnew System::Windows::Forms::ContextMenuStrip();
 				 context->Name = L"contextMenu";
@@ -350,6 +373,20 @@ private: System::Void mi_is_showtip_Click(System::Object^  sender, System::Event
 private: System::Void handle_play(System::Object^  sender, System::EventArgs^  e) {
 			 int k = int::Parse(sender->ToString());
 			 p_sd->play(i, j, k);
+			 Invalidate(true);
+		 }
+private: System::Void mi_restart_Click(System::Object^  sender, System::EventArgs^  e) {
+			 if(p_sd->status() == Algorithm::Status::Loaded)
+				 return;
+			 if(MessageBox::Show(L"游戏数据将被丢弃，确认重新开始吗？", L"重新开始", MessageBoxButtons::OKCancel, MessageBoxIcon::Warning)
+				 == System::Windows::Forms::DialogResult::OK)
+			 {
+				 p_sd->reset();
+				 Invalidate(true);
+			 }
+		 }
+private: System::Void resetijToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+			 p_sd->reset(i, j);
 			 Invalidate(true);
 		 }
 };

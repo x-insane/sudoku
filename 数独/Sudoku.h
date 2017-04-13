@@ -23,7 +23,7 @@ namespace Algorithm
 	{
 		Empty, // 表示还未加载数独资源
 		Bad,   // 表示所加载的数据有错误，无法提供功能
-		Loaded,// 刚加载并初始化数独数据
+		Loaded,// 刚加载并初始化数独数据，还没有进行任何填数操作
 		Ok,    // 表示一切正常
 		Wrong, // 表示当前状态有错误填数
 		Error, // 传入参数错误
@@ -60,7 +60,8 @@ namespace Algorithm
 		Status set(Res res, Res group=0); // group为0时表示默认标准数独
 		Status set(Board res);
 		Status play(int x, int y, int k);
-		void reset();
+		Status reset();
+		Status reset(int x, int y);
 		int solve(bool isreset=false);
 	protected:
 		void clear(); // 清除当前所有数据，准备接收新数据
