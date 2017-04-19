@@ -32,12 +32,13 @@ namespace Algorithm
 	
 	class Sudoku
 	{
-		struct 
+		struct NMap
 		{
 			short x;
 			short y;
 			bool is[10];
 		}n_map[10]; // 有n种填法的小格
+		short map[10][10]; // 每个group的所有成员
 		bool row[10][10]; // row[i][k] -- 第i行是否被k占领
 		bool col[10][10]; // col[j][k] -- 第j列是否被k占领
 		bool group[10][10]; // group[g][k] -- 第g组被k占领
@@ -57,12 +58,33 @@ namespace Algorithm
 		{
 			return _status;
 		}
+		const char* status_string() const
+		{
+			switch(_status)
+			{
+			case Status::Bad:
+				return "错误";
+			case Status::Empty:
+				return "未加载";
+			case Status::Error:
+				return "错误";
+			case Status::Loaded:
+				return "就绪";
+			case Status::Ok:
+				return "正常";
+			case Status::Win:
+				return "完成";
+			case Status::Wrong:
+				return "有错填";
+			}
+			return "";
+		}
 		Status set(Res res, Res group=0); // group为0时表示默认标准数独
 		Status set(Board res);
-		Status play(int x, int y, int k);
+		Status play(int x, int y, int k, bool is_solve=false);
 		Status reset();
-		Status reset(int x, int y);
-		int solve(bool isreset=false);
+		Status reset(int x, int y, bool is_solve=false);
+		Status solve(bool is_reset=false);
 	protected:
 		void clear(); // 清除当前所有数据，准备接收新数据
 		bool can(int x, int y, int k) // 判断x行y列能否填k

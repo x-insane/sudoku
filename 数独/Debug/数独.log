@@ -1,12 +1,15 @@
-﻿生成启动时间为 2017/4/13 14:00:14。
+﻿生成启动时间为 2017/4/19 22:55:24。
      1>项目“C:\Users\yanxu\documents\visual studio 2010\Projects\数独\数独\数独.vcxproj”在节点 2 上(build 个目标)。
      1>InitializeBuildStatus:
-         正在对“Debug\数独.unsuccessfulbuild”执行 Touch 任务。
+         正在创建“Debug\数独.unsuccessfulbuild”，因为已指定“AlwaysCreate”。
        GenerateTargetFrameworkMonikerAttribute:
        正在跳过目标“GenerateTargetFrameworkMonikerAttribute”，因为所有输出文件相对于输入文件而言都是最新的。
        ClCompile:
          所有输出均为最新。
-         所有输出均为最新。
+         C:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /AI"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0" /Zi /clr:pure /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _UNICODE /D UNICODE /EHa /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"StdAfx.h" /Fp"Debug\数独.pch" /Fo"Debug\\" /Fd"Debug\vc100.pdb" /TP /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Core.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Data.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Drawing.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Windows.Forms.dll" /FU"C:\Program Files (x86)\Reference Assemblies\Microsoft\Framework\.NETFramework\v4.0\System.Xml.dll" /analyze- /errorReport:prompt Sudoku.cpp "数独.cpp" /clr:nostdlib 
+         Sudoku.cpp
+         数独.cpp
+         正在生成代码...
          所有输出均为最新。
        CoreResGen:
          没有相对于源文件而言已过期的资源。正在跳过资源生成操作。
@@ -31,4 +34,4 @@
 
 生成成功。
 
-已用时间 00:00:02.48
+已用时间 00:00:03.58

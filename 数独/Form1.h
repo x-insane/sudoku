@@ -44,6 +44,8 @@ namespace 数独 {
 	private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem10;
 	private: System::Windows::Forms::ContextMenuStrip^  contextMenuStrip2;
 	private: System::Windows::Forms::ToolStripMenuItem^  resetijToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  solveToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  answerToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  mi_manage;
 
 
@@ -57,7 +59,7 @@ namespace 数独 {
 			//
 			f_admin = gcnew Admin(this);
 			p_sd = new Algorithm::Sudoku();
-			int data[10][10] =
+			/*int data[10][10] =
 			{
 				{0,0,0,0,0,0,0,0,0,0},
 				{0,0,0,9,5,3,6,0,0,4},
@@ -70,7 +72,46 @@ namespace 数独 {
 				{0,0,0,7,0,0,0,0,0,2},
 				{0,4,0,0,1,6,2,7,0,0}
 			};
-			if(p_sd->set(data) != Algorithm::Status::Ok)
+			int group[10][10] = 
+			{
+				{0,0,0,0,0,0,0,0,0,0},
+				{0,1,1,1,2,2,2,3,3,3},
+				{0,1,1,1,2,2,2,3,3,3},
+				{0,1,1,1,2,2,2,3,3,3},
+				{0,4,4,4,5,5,5,6,6,6},
+				{0,4,4,4,5,5,5,6,6,6},
+				{0,4,4,4,5,5,5,6,6,6},
+				{0,7,7,7,8,8,8,9,9,9},
+				{0,7,7,7,8,8,8,9,9,9},
+				{0,7,7,7,8,8,8,9,9,9}
+			};*/
+			int data[10][10] =
+			{
+				{0,0,0,0,0,0,0,0,0,0},
+				{0,0,0,9,0,0,0,0,0,4},
+				{0,0,0,0,0,0,0,0,2,0},
+				{0,0,6,0,0,0,2,3,0,0},
+				{0,5,3,0,0,0,0,1,0,0},
+				{0,0,2,0,0,0,0,0,1,0},
+				{0,0,0,7,0,0,0,0,8,9},
+				{0,0,0,5,8,0,0,0,4,0},
+				{0,0,1,0,0,0,0,0,0,0},
+				{0,4,0,0,0,0,0,9,0,0}
+			};
+			int group[10][10] = 
+			{
+				{0,0,0,0,0,0,0,0,0,0},
+				{0,1,2,2,2,3,4,4,4,4},
+				{0,1,1,1,2,3,3,3,4,4},
+				{0,1,1,2,2,3,7,3,4,4},
+				{0,1,2,2,2,7,7,3,3,4},
+				{0,1,1,6,7,7,7,3,9,9},
+				{0,5,6,6,7,7,8,8,8,9},
+				{0,5,5,6,7,6,8,8,9,9},
+				{0,5,5,6,6,6,8,9,9,9},
+				{0,5,5,5,5,6,8,8,8,9}
+			};
+			if(p_sd->set(data, group) != Algorithm::Status::Ok)
 			{
 			}
 		}
@@ -107,6 +148,8 @@ namespace 数独 {
 			this->mi_game = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->mi_restart = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->mi_is_showtip = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->solveToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->answerToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->mi_manage = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
@@ -137,8 +180,8 @@ namespace 数独 {
 			// 
 			// mi_game
 			// 
-			this->mi_game->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) {this->mi_restart, 
-				this->mi_is_showtip});
+			this->mi_game->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(4) {this->mi_restart, 
+				this->mi_is_showtip, this->solveToolStripMenuItem, this->answerToolStripMenuItem});
 			this->mi_game->Name = L"mi_game";
 			this->mi_game->Size = System::Drawing::Size(44, 21);
 			this->mi_game->Text = L"游戏";
@@ -146,16 +189,30 @@ namespace 数独 {
 			// mi_restart
 			// 
 			this->mi_restart->Name = L"mi_restart";
-			this->mi_restart->Size = System::Drawing::Size(124, 22);
+			this->mi_restart->Size = System::Drawing::Size(152, 22);
 			this->mi_restart->Text = L"重新开始";
 			this->mi_restart->Click += gcnew System::EventHandler(this, &Form1::mi_restart_Click);
 			// 
 			// mi_is_showtip
 			// 
 			this->mi_is_showtip->Name = L"mi_is_showtip";
-			this->mi_is_showtip->Size = System::Drawing::Size(124, 22);
+			this->mi_is_showtip->Size = System::Drawing::Size(152, 22);
 			this->mi_is_showtip->Text = L"显示提示";
 			this->mi_is_showtip->Click += gcnew System::EventHandler(this, &Form1::mi_is_showtip_Click);
+			// 
+			// solveToolStripMenuItem
+			// 
+			this->solveToolStripMenuItem->Name = L"solveToolStripMenuItem";
+			this->solveToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->solveToolStripMenuItem->Text = L"模拟解数独";
+			this->solveToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::solveToolStripMenuItem_Click);
+			// 
+			// answerToolStripMenuItem
+			// 
+			this->answerToolStripMenuItem->Name = L"answerToolStripMenuItem";
+			this->answerToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->answerToolStripMenuItem->Text = L"显示答案";
+			this->answerToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::answerToolStripMenuItem_Click);
 			// 
 			// mi_manage
 			// 
@@ -250,12 +307,12 @@ namespace 数独 {
 			// 
 			this->contextMenuStrip2->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) {this->resetijToolStripMenuItem});
 			this->contextMenuStrip2->Name = L"contextMenuStrip2";
-			this->contextMenuStrip2->Size = System::Drawing::Size(153, 48);
+			this->contextMenuStrip2->Size = System::Drawing::Size(125, 26);
 			// 
 			// resetijToolStripMenuItem
 			// 
 			this->resetijToolStripMenuItem->Name = L"resetijToolStripMenuItem";
-			this->resetijToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->resetijToolStripMenuItem->Size = System::Drawing::Size(124, 22);
 			this->resetijToolStripMenuItem->Text = L"取消填入";
 			this->resetijToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::resetijToolStripMenuItem_Click);
 			// 
@@ -297,8 +354,8 @@ private: System::Void label1_Paint(System::Object^  sender, System::Windows::For
 			 for(int i=0;i<10;++i)
 			 {
 				 // 黑色线画边框九宫格，灰色线画内部小格
-				 dc->DrawLine(i%3 ? Pens::LightGray : Pens::Black, x, y + i*a/9, x + a, y + i*a/9);
-				 dc->DrawLine(i%3 ? Pens::LightGray : Pens::Black, x + i*a/9, y, x + i*a/9, y + a);
+				 dc->DrawLine(i%9 ? Pens::LightGray : Pens::Black, x, y + i*a/9, x + a, y + i*a/9);
+				 dc->DrawLine(i%9 ? Pens::LightGray : Pens::Black, x + i*a/9, y, x + i*a/9, y + a);
 			 }
 			 
 			 Algorithm::Board board = p_sd->get();
@@ -310,9 +367,15 @@ private: System::Void label1_Paint(System::Object^  sender, System::Windows::For
 			 {
 				 for(int j=0;j<9;++j)
 				 {
+					 if(i && board[j+1][i+1].group != board[j+1][i].group)
+						 dc->DrawLine(Pens::Black, x+i*a/9, y+j*a/9, x+i*a/9, y+(j+1)*a/9); // 用粗线画左边框
+					 if(j && board[j+1][i+1].group != board[j][i+1].group)
+						 dc->DrawLine(Pens::Black, x+i*a/9, y+j*a/9, x+(i+1)*a/9, y+j*a/9); // 用粗线画上边框
 					 System::Drawing::Brush^ brush = Brushes::Black;
 					 if(board[j+1][i+1].who == 1)
 						 brush = Brushes::Blue;
+					 else if(board[j+1][i+1].who == 2)
+						 brush = Brushes::Green;
 					 else if(board[j+1][i+1].who == 3)
 						 brush = Brushes::Red;
 					 if(board[j+1][i+1].num)
@@ -323,7 +386,6 @@ private: System::Void label1_Paint(System::Object^  sender, System::Windows::For
 			 delete sf;
 		 }
 private: System::Void label1_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e) {
-			 
 			 float a = 360;
 			 if(label1->Width > 900 && label1->Height > 900)
 				 a = 800;
@@ -373,6 +435,7 @@ private: System::Void mi_is_showtip_Click(System::Object^  sender, System::Event
 private: System::Void handle_play(System::Object^  sender, System::EventArgs^  e) {
 			 int k = int::Parse(sender->ToString());
 			 p_sd->play(i, j, k);
+			 this->Text = "数独 - " + %String(p_sd->status_string());
 			 Invalidate(true);
 		 }
 private: System::Void mi_restart_Click(System::Object^  sender, System::EventArgs^  e) {
@@ -382,11 +445,39 @@ private: System::Void mi_restart_Click(System::Object^  sender, System::EventArg
 				 == System::Windows::Forms::DialogResult::OK)
 			 {
 				 p_sd->reset();
+				 this->Text = "数独 - " + %String(p_sd->status_string());
 				 Invalidate(true);
 			 }
 		 }
 private: System::Void resetijToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
 			 p_sd->reset(i, j);
+			 this->Text = "数独 - " + %String(p_sd->status_string());
+			 Invalidate(true);
+		 }
+private: System::Void solveToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+			 switch(p_sd->solve(false))
+			 {
+			 case Algorithm::Status::Error:
+				 MessageBox::Show(L"当前状态不能使用本功能", L"提示");
+				 break;
+			 case Algorithm::Status::Wrong:
+				 MessageBox::Show(L"当前状态没有可行解", L"提示");
+				 break;
+			 }
+			 this->Text = "数独 - " + %String(p_sd->status_string());
+			 Invalidate(true);
+		 }
+private: System::Void answerToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e) {
+			 switch(p_sd->solve(true))
+			 {
+			 case Algorithm::Status::Error:
+				 MessageBox::Show(L"当前状态不能使用本功能", L"提示");
+				 break;
+			 case Algorithm::Status::Wrong:
+				 MessageBox::Show(L"当前状态没有可行解", L"提示");
+				 break;
+			 }
+			 this->Text = "数独 - " + %String(p_sd->status_string());
 			 Invalidate(true);
 		 }
 };
