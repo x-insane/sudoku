@@ -1,12 +1,8 @@
-#include "StdAfx.h"
+#include "stdafx.h"
 #include "Sudoku.h"
 #include "memory.h"
 
 using namespace Algorithm;
-
-void Sudoku::clear()
-{
-}
 
 Status Sudoku::set(Res res, Res group)
 {
@@ -142,7 +138,8 @@ Status Sudoku::play(int i, int j, int k, bool is_solve)
 		data[i][j].who = 2;
 	else
 		data[i][j].who = 1;
-	_status = Status::Ok;
+	if(is_solve)
+		_status = Status::Ok;
 	if(!is_solve && !data[i][j].is[k])
 	{
 		_status = Status::Wrong;

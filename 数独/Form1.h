@@ -20,7 +20,6 @@ namespace 数独 {
 	public ref class Form1 : public System::Windows::Forms::Form
 	{
 		Algorithm::Sudoku* p_sd;
-		Document::SDoc m_doc;
 		Admin^ f_admin;
 		int i,j;
 	private: System::Windows::Forms::MenuStrip^  menuStrip1;
@@ -351,14 +350,17 @@ private: System::Void label1_Paint(System::Object^  sender, System::Windows::For
 			 // 以上为大小自适应代码
 			 float x = (label1->Width - a) / 2;
 			 float y = (label1->Height - a) / 2; // 数独区域左上角坐标
+
+			 Pen^ pen = gcnew Pen(Color::Black, 3);
+
 			 for(int i=0;i<10;++i)
 			 {
-				 // 黑色线画边框九宫格，灰色线画内部小格
-				 dc->DrawLine(i%9 ? Pens::LightGray : Pens::Black, x, y + i*a/9, x + a, y + i*a/9);
-				 dc->DrawLine(i%9 ? Pens::LightGray : Pens::Black, x + i*a/9, y, x + i*a/9, y + a);
+				 // 黑色线画边框，灰色线画内部小格
+				 dc->DrawLine(i%9 ? Pens::LightGray : pen, x + i*a/9, y, x + i*a/9, y + a);
+				 dc->DrawLine(i%9 ? Pens::LightGray : pen, x, y + i*a/9, x + a, y + i*a/9);
 			 }
 			 
-			 Algorithm::Board board = p_sd->get();
+			 Document::Board board = p_sd->get();
 			 System::Drawing::Font^ font = gcnew System::Drawing::Font("You yuan", a/18);
 			 StringFormat^ sf = gcnew StringFormat;
 			 sf->LineAlignment = StringAlignment::Center;
@@ -367,10 +369,17 @@ private: System::Void label1_Paint(System::Object^  sender, System::Windows::For
 			 {
 				 for(int j=0;j<9;++j)
 				 {
+					 Rectangle rect = Rectangle(int(x+i*a/9+2+0.5), int(y+j*a/9+2+0.5), int(a/9-1), int(a/9-1));
+					 /*switch(board[j+1][i+1].group)
+					 {
+					 case 1:
+						 dc->FillRectangle(Brushes::Pink, rect);
+						 break;
+					 }*/
 					 if(i && board[j+1][i+1].group != board[j+1][i].group)
-						 dc->DrawLine(Pens::Black, x+i*a/9, y+j*a/9, x+i*a/9, y+(j+1)*a/9); // 用粗线画左边框
+						 dc->DrawLine(pen, x+i*a/9, y+j*a/9, x+i*a/9, y+(j+1)*a/9); // 用粗线画左边框
 					 if(j && board[j+1][i+1].group != board[j][i+1].group)
-						 dc->DrawLine(Pens::Black, x+i*a/9, y+j*a/9, x+(i+1)*a/9, y+j*a/9); // 用粗线画上边框
+						 dc->DrawLine(pen, x+i*a/9, y+j*a/9, x+(i+1)*a/9, y+j*a/9); // 用粗线画上边框
 					 System::Drawing::Brush^ brush = Brushes::Black;
 					 if(board[j+1][i+1].who == 1)
 						 brush = Brushes::Blue;
@@ -379,9 +388,10 @@ private: System::Void label1_Paint(System::Object^  sender, System::Windows::For
 					 else if(board[j+1][i+1].who == 3)
 						 brush = Brushes::Red;
 					 if(board[j+1][i+1].num)
-						dc->DrawString(board[j+1][i+1].num.ToString(), font, brush, Rectangle(int(x+i*a/9+2), int(y+j*a/9+2), int(a/9), int(a/9)), sf);
+						dc->DrawString(board[j+1][i+1].num.ToString(), font, brush, rect, sf);
 				 }
 			 }
+			 delete pen;
 			 delete font;
 			 delete sf;
 		 }
@@ -399,7 +409,7 @@ private: System::Void label1_MouseClick(System::Object^  sender, System::Windows
 			 int j = int((e->Y - y)/(a/9)) + 1;
 			 if(i<1 || i>9 || j<1 || j>9)
 				 return;
-			 Algorithm::SD sd = p_sd->get()[j][i];
+			 Document::SD sd = p_sd->get()[j][i];
 			 this->i = j;
 			 this->j = i;
 			 if(sd.num)

@@ -1,24 +1,10 @@
 #pragma once
 
+#include "SDoc.h"
+using namespace Document;
+
 namespace Algorithm
 {
-	struct SD // 设计数独小格
-	{
-		short num;
-		short group;
-		// 1-9，表示所属分组
-		short who;
-		// 0 -- 数独原有数字，默认
-		// 1 -- 玩家添入数字
-		// 2 -- 解数独时填入数字
-		// 3 -- 玩家错填数字
-		short range; // 表示能填数的个数
-		bool is[10]; // 表示该格能否填1-9的数
-	};
-	
-	typedef const SD(*Board)[10];
-	typedef const int(*Res)[10];
-	
 	enum class Status // enum class 方式 
 	{
 		Empty, // 表示还未加载数独资源
@@ -86,7 +72,6 @@ namespace Algorithm
 		Status reset(int x, int y, bool is_solve=false);
 		Status solve(bool is_reset=false);
 	protected:
-		void clear(); // 清除当前所有数据，准备接收新数据
 		bool can(int x, int y, int k) // 判断x行y列能否填k
 		{
 			if(data[x][y].num)
