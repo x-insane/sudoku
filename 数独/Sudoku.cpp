@@ -1,8 +1,6 @@
 #include "stdafx.h"
-#include "Sudoku.h"
 #include "memory.h"
 
-using namespace Algorithm;
 
 Status Sudoku::set(Res res, Res group)
 {

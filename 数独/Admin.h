@@ -1,8 +1,7 @@
 #pragma once
 
-namespace 数独 {
-
 	using namespace System;
+	using namespace System::IO;
 	using namespace System::ComponentModel;
 	using namespace System::Collections;
 	using namespace System::Windows::Forms;
@@ -59,10 +58,6 @@ namespace 数独 {
 		/// </summary>
 		void InitializeComponent(void)
 		{
-			System::Windows::Forms::ListViewItem^  listViewItem1 = (gcnew System::Windows::Forms::ListViewItem(L"111"));
-			System::Windows::Forms::ListViewItem^  listViewItem2 = (gcnew System::Windows::Forms::ListViewItem(L"222"));
-			System::Windows::Forms::ListViewItem^  listViewItem3 = (gcnew System::Windows::Forms::ListViewItem(L"333"));
-			System::Windows::Forms::ListViewItem^  listViewItem4 = (gcnew System::Windows::Forms::ListViewItem(L"444"));
 			this->listView1 = (gcnew System::Windows::Forms::ListView());
 			this->SuspendLayout();
 			// 
@@ -73,16 +68,13 @@ namespace 数独 {
 			this->listView1->Font = (gcnew System::Drawing::Font(L"宋体", 15, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
 				static_cast<System::Byte>(134)));
 			this->listView1->ImeMode = System::Windows::Forms::ImeMode::On;
-			this->listView1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ListViewItem^  >(4) {listViewItem1, listViewItem2, 
-				listViewItem3, listViewItem4});
-			this->listView1->Location = System::Drawing::Point(30, 45);
+			this->listView1->Location = System::Drawing::Point(30, 24);
 			this->listView1->Margin = System::Windows::Forms::Padding(30);
 			this->listView1->Name = L"listView1";
-			this->listView1->Size = System::Drawing::Size(396, 642);
+			this->listView1->Size = System::Drawing::Size(396, 663);
 			this->listView1->TabIndex = 0;
 			this->listView1->UseCompatibleStateImageBehavior = false;
 			this->listView1->View = System::Windows::Forms::View::SmallIcon;
-			this->listView1->DrawItem += gcnew System::Windows::Forms::DrawListViewItemEventHandler(this, &Admin::listView1_DrawItem);
 			// 
 			// Admin
 			// 
@@ -106,6 +98,7 @@ namespace 数独 {
 				 f_parent->Show();
 				 f_parent->TopMost = false;
 			 }
+			 /*
 	private: System::Void listView1_DrawItem(System::Object^  sender, System::Windows::Forms::DrawListViewItemEventArgs^  e) {
 				 if (listView1->SelectedIndices->Count)
 				 {
@@ -140,6 +133,17 @@ namespace 数独 {
 					drawFormat->Alignment = StringAlignment::Center;
 				drawFormat->LineAlignment = StringAlignment::Center;
 				e->Graphics->DrawString( e->SubItem->Text, drawFont, drawBrush, drawRect, drawFormat);
+			}*/
+public: System::Void reload()
+		{
+			listView1->Clear();
+			if(!Directory::Exists("Games"))
+			{
+				Directory::CreateDirectory("Games");
+				return;
 			}
+			array<String^>^ all = Directory::GetFiles("Games", "*.sd");
+			for(int i=0;i<all->Length;++i)
+				listView1->Items->AddRange(gcnew cli::array<System::Windows::Forms::ListViewItem^>(1){gcnew System::Windows::Forms::ListViewItem(all[i])});
+		}
 };
-}

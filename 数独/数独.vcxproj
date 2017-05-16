@@ -50,7 +50,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <PrecompiledHeader>Use</PrecompiledHeader>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -83,27 +83,28 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="app.ico" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AddSudoku.cpp" />
     <ClCompile Include="Admin.cpp" />
     <ClCompile Include="AssemblyInfo.cpp" />
+    <ClCompile Include="Form1.cpp" />
     <ClCompile Include="SDoc.cpp" />
-    <ClCompile Include="stdafx.cpp">
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
-      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">Create</PrecompiledHeader>
-    </ClCompile>
     <ClCompile Include="Sudoku.cpp" />
     <ClCompile Include="数独.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AddSudoku.h">
+      <FileType>CppForm</FileType>
+    </ClInclude>
     <ClInclude Include="Admin.h">
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="Form1.h">
       <FileType>CppForm</FileType>
     </ClInclude>
-    <ClInclude Include="resource.h" />
     <ClInclude Include="SDoc.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Sudoku.h" />
@@ -112,6 +113,9 @@
     <ResourceCompile Include="app.rc" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="AddSudoku.resx">
+      <DependentUpon>AddSudoku.h</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Admin.resx">
       <DependentUpon>Admin.h</DependentUpon>
     </EmbeddedResource>
