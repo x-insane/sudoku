@@ -86,30 +86,62 @@ System::Void Form1::label1_Paint(System::Object^  sender, System::Windows::Forms
 	float y = (label1->Height - a) / 2; // 数独区域左上角坐标
 
 	Pen^ pen = gcnew Pen(Color::Black, 3);
-
-	for(int i=0;i<10;++i)
-	{
-		// 黑色线画边框，灰色线画内部小格
-		dc->DrawLine(i%9 ? Pens::LightGray : pen, x + i*a/9, y, x + i*a/9, y + a);
-		dc->DrawLine(i%9 ? Pens::LightGray : pen, x, y + i*a/9, x + a, y + i*a/9);
-	}
 			 
 	Board board = p_sd->get();
 	System::Drawing::Font^ font = gcnew System::Drawing::Font("You yuan", a/18);
 	StringFormat^ sf = gcnew StringFormat;
 	sf->LineAlignment = StringAlignment::Center;
 	sf->Alignment = StringAlignment::Center;
-	for(int i=0;i<9;++i)
+	for (int i = 0; i < 9; ++i)
 	{
-		for(int j=0;j<9;++j)
+		for (int j = 0; j < 9; ++j)
 		{
 			Rectangle rect = Rectangle(int(x+i*a/9+2+0.5), int(y+j*a/9+2+0.5), int(a/9-1), int(a/9-1));
-			/*switch(board[j+1][i+1].group)
+			switch(board[j+1][i+1].group)
 			{
 			case 1:
-				dc->FillRectangle(Brushes::Pink, rect);
+				dc->FillRectangle(gcnew SolidBrush(Color::FromArgb(0xFFC1FFC1)), rect);
 				break;
-			}*/
+			case 2:
+				dc->FillRectangle(Brushes::LightGoldenrodYellow, rect);
+				break;
+			case 3:
+				dc->FillRectangle(Brushes::PowderBlue, rect);
+				break;
+			case 4:
+				dc->FillRectangle(Brushes::Lavender, rect);
+				break;
+			case 5:
+				dc->FillRectangle(gcnew SolidBrush(Color::FromArgb(0xFFFFE1FF)), rect);
+				break;
+			case 6:
+				dc->FillRectangle(gcnew SolidBrush(Color::FromArgb(0xFFF6E6CC)), rect);
+				break;
+			case 7:
+				dc->FillRectangle(gcnew SolidBrush(Color::FromArgb(0xFFF0DBCE)), rect);
+				break;
+			case 8:
+				dc->FillRectangle(Brushes::PaleTurquoise, rect);
+				break;
+			case 9:
+				dc->FillRectangle(gcnew SolidBrush(Color::FromArgb(0xFFEED2EE)), rect);
+				break;
+			}
+		}
+	}
+
+	for (int i = 0; i<10; ++i)
+	{
+		// 黑色线画边框，灰色线画内部小格
+		dc->DrawLine(i % 9 ? Pens::LightGray : pen, x + i*a / 9, y, x + i*a / 9, y + a);
+		dc->DrawLine(i % 9 ? Pens::LightGray : pen, x, y + i*a / 9, x + a, y + i*a / 9);
+	}
+
+	for (int i = 0; i < 9; ++i)
+	{
+		for (int j = 0; j < 9; ++j)
+		{
+			Rectangle rect = Rectangle(int(x + i*a / 9 + 2 + 0.5), int(y + j*a / 9 + 2 + 0.5), int(a / 9 - 1), int(a / 9 - 1));
 			if(i && board[j+1][i+1].group != board[j+1][i].group)
 				dc->DrawLine(pen, x+i*a/9, y+j*a/9, x+i*a/9, y+(j+1)*a/9); // 用粗线画左边框
 			if(j && board[j+1][i+1].group != board[j][i+1].group)
@@ -122,9 +154,10 @@ System::Void Form1::label1_Paint(System::Object^  sender, System::Windows::Forms
 			else if(board[j+1][i+1].who == 3)
 				brush = Brushes::Red;
 			if(board[j+1][i+1].num)
-			dc->DrawString(board[j+1][i+1].num.ToString(), font, brush, rect, sf);
+				dc->DrawString(board[j+1][i+1].num.ToString(), font, brush, rect, sf);
 		}
 	}
+
 	delete pen;
 	delete font;
 	delete sf;
@@ -183,7 +216,7 @@ System::Void Form1::handle_play(System::Object^  sender, System::EventArgs^  e)
 	int k = int::Parse(sender->ToString());
 	p_sd->play(i, j, k);
 	this->Text = "数独 - " + %String(p_sd->status_string());
-	Invalidate(true);
+	label1->Invalidate(true);
 	if(p_sd->status() == Status::Win)
 		MessageBox::Show(L"恭喜你完成了整个数独！", L"游戏结束");
 }
@@ -197,7 +230,7 @@ System::Void Form1::mi_restart_Click(System::Object^  sender, System::EventArgs^
 	{
 		p_sd->reset();
 		this->Text = "数独 - " + %String(p_sd->status_string());
-		Invalidate(true);
+		label1->Invalidate(true);
 	}
 }
 
@@ -205,7 +238,7 @@ System::Void Form1::resetijToolStripMenuItem_Click(System::Object^  sender, Syst
 {
 	p_sd->reset(i, j);
 	this->Text = "数独 - " + %String(p_sd->status_string());
-	Invalidate(true);
+	label1->Invalidate(true);
 }
 
 System::Void Form1::solveToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
@@ -220,7 +253,7 @@ System::Void Form1::solveToolStripMenuItem_Click(System::Object^  sender, System
 		break;
 	}
 	this->Text = "数独 - " + %String(p_sd->status_string());
-	Invalidate(true);
+	label1->Invalidate(true);
 }
 
 System::Void Form1::answerToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
@@ -235,11 +268,22 @@ System::Void Form1::answerToolStripMenuItem_Click(System::Object^  sender, Syste
 		break;
 	}
 	this->Text = "数独 - " + %String(p_sd->status_string());
-	Invalidate(true);
+	label1->Invalidate(true);
 }
 
 System::Void Form1::addsudokuToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
 {
-	f_add_sudoku->Show();
-	f_add_sudoku->Focus();
+	// f_add_sudoku->Show();
+	// f_add_sudoku->Focus();
+	static Sudoku sd;
+	Modify^ modify = gcnew Modify(this, &sd);
+	Hide();
+	modify->Show();
+}
+
+System::Void Form1::modifysudokuToolStripMenuItem_Click(System::Object ^ sender, System::EventArgs ^ e)
+{
+	Modify^ modify = gcnew Modify(this, p_sd);
+	Hide();
+	modify->Show();
 }

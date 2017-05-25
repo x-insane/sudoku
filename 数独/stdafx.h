@@ -33,13 +33,13 @@ typedef const int(*Res)[10];
 ref class Form1;
 ref class Admin;
 ref class AddSudoku;
+ref class Modify;
 class Sudoku;
-class SDoc;
 struct SD;
 
 #include "Form1.h"
 #include "AddSudoku.h"
 #include "Admin.h"
+#include "Modify.h"
 
-#include "SDoc.h"
 #include "Sudoku.h"

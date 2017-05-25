@@ -39,6 +39,8 @@ private: System::Windows::Forms::ToolStripMenuItem^  resetijToolStripMenuItem;
 private: System::Windows::Forms::ToolStripMenuItem^  solveToolStripMenuItem;
 private: System::Windows::Forms::ToolStripMenuItem^  answerToolStripMenuItem;
 private: System::Windows::Forms::ToolStripMenuItem^  addsudokuToolStripMenuItem;
+private: System::Windows::Forms::ToolStripMenuItem^  modifysudokuToolStripMenuItem;
+
 private: System::Windows::Forms::ToolStripMenuItem^  mi_manage;
 
 public:
@@ -77,8 +79,9 @@ private:
 			this->mi_is_showtip = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->solveToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->answerToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
-			this->mi_manage = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->addsudokuToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->modifysudokuToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->mi_manage = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->contextMenuStrip1 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
 			this->toolStripMenuItem2 = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -99,8 +102,7 @@ private:
 			// 
 			// menuStrip1
 			// 
-			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {this->mi_game, this->mi_manage, 
-				this->addsudokuToolStripMenuItem});
+			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) { this->mi_game, this->mi_manage });
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
 			this->menuStrip1->Size = System::Drawing::Size(674, 25);
@@ -109,8 +111,10 @@ private:
 			// 
 			// mi_game
 			// 
-			this->mi_game->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(4) {this->mi_restart, 
-				this->mi_is_showtip, this->solveToolStripMenuItem, this->answerToolStripMenuItem});
+			this->mi_game->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(6) {
+				this->mi_restart,
+					this->mi_is_showtip, this->solveToolStripMenuItem, this->answerToolStripMenuItem, this->addsudokuToolStripMenuItem, this->modifysudokuToolStripMenuItem
+			});
 			this->mi_game->Name = L"mi_game";
 			this->mi_game->Size = System::Drawing::Size(44, 21);
 			this->mi_game->Text = L"游戏";
@@ -143,19 +147,26 @@ private:
 			this->answerToolStripMenuItem->Text = L"显示答案";
 			this->answerToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::answerToolStripMenuItem_Click);
 			// 
+			// addsudokuToolStripMenuItem
+			// 
+			this->addsudokuToolStripMenuItem->Name = L"addsudokuToolStripMenuItem";
+			this->addsudokuToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->addsudokuToolStripMenuItem->Text = L"制作数独";
+			this->addsudokuToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::addsudokuToolStripMenuItem_Click);
+			// 
+			// modifysudokuToolStripMenuItem
+			// 
+			this->modifysudokuToolStripMenuItem->Name = L"modifysudokuToolStripMenuItem";
+			this->modifysudokuToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->modifysudokuToolStripMenuItem->Text = L"修改数独";
+			this->modifysudokuToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::modifysudokuToolStripMenuItem_Click);
+			// 
 			// mi_manage
 			// 
 			this->mi_manage->Name = L"mi_manage";
 			this->mi_manage->Size = System::Drawing::Size(44, 21);
 			this->mi_manage->Text = L"管理";
 			this->mi_manage->Click += gcnew System::EventHandler(this, &Form1::管理ToolStripMenuItem_Click);
-			// 
-			// addsudokuToolStripMenuItem
-			// 
-			this->addsudokuToolStripMenuItem->Name = L"addsudokuToolStripMenuItem";
-			this->addsudokuToolStripMenuItem->Size = System::Drawing::Size(68, 21);
-			this->addsudokuToolStripMenuItem->Text = L"制作数独";
-			this->addsudokuToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::addsudokuToolStripMenuItem_Click);
 			// 
 			// label1
 			// 
@@ -170,9 +181,11 @@ private:
 			// 
 			// contextMenuStrip1
 			// 
-			this->contextMenuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(9) {this->toolStripMenuItem2, 
-				this->toolStripMenuItem3, this->toolStripMenuItem4, this->toolStripMenuItem5, this->toolStripMenuItem6, this->toolStripMenuItem7, 
-				this->toolStripMenuItem8, this->toolStripMenuItem9, this->toolStripMenuItem10});
+			this->contextMenuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(9) {
+				this->toolStripMenuItem2,
+					this->toolStripMenuItem3, this->toolStripMenuItem4, this->toolStripMenuItem5, this->toolStripMenuItem6, this->toolStripMenuItem7,
+					this->toolStripMenuItem8, this->toolStripMenuItem9, this->toolStripMenuItem10
+			});
 			this->contextMenuStrip1->Name = L"contextMenuStrip1";
 			this->contextMenuStrip1->Size = System::Drawing::Size(84, 202);
 			// 
@@ -241,7 +254,7 @@ private:
 			// 
 			// contextMenuStrip2
 			// 
-			this->contextMenuStrip2->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) {this->resetijToolStripMenuItem});
+			this->contextMenuStrip2->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->resetijToolStripMenuItem });
 			this->contextMenuStrip2->Name = L"contextMenuStrip2";
 			this->contextMenuStrip2->Size = System::Drawing::Size(125, 26);
 			// 
@@ -270,6 +283,7 @@ private:
 			this->contextMenuStrip2->ResumeLayout(false);
 			this->ResumeLayout(false);
 			this->PerformLayout();
+
 		}
 #pragma endregion
 	private: System::Void 管理ToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
@@ -284,4 +298,5 @@ private:
 	private: System::Void solveToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void answerToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void addsudokuToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void modifysudokuToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 };

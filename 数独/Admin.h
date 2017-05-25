@@ -65,16 +65,15 @@
 			// 
 			this->listView1->Alignment = System::Windows::Forms::ListViewAlignment::Left;
 			this->listView1->BorderStyle = System::Windows::Forms::BorderStyle::None;
-			this->listView1->Font = (gcnew System::Drawing::Font(L"ËÎÌו", 15, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point, 
+			this->listView1->Font = (gcnew System::Drawing::Font(L"ËÎÌו", 15, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(134)));
 			this->listView1->ImeMode = System::Windows::Forms::ImeMode::On;
 			this->listView1->Location = System::Drawing::Point(30, 24);
 			this->listView1->Margin = System::Windows::Forms::Padding(30);
 			this->listView1->Name = L"listView1";
-			this->listView1->Size = System::Drawing::Size(396, 663);
+			this->listView1->Size = System::Drawing::Size(1061, 663);
 			this->listView1->TabIndex = 0;
 			this->listView1->UseCompatibleStateImageBehavior = false;
-			this->listView1->View = System::Windows::Forms::View::SmallIcon;
 			// 
 			// Admin
 			// 

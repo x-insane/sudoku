@@ -2,71 +2,101 @@
 #include "memory.h"
 
 
-Status Sudoku::set(Res res, Res group)
+Sudoku::Sudoku(const Sudoku & sd)
+{
+	for (int i = 1; i <= 9; ++i)
+		for (int j = 1; j <= 9; ++j)
+			data[i][j] = sd.data[i][j];
+}
+
+bool Sudoku::check()
+{
+	init();
+	int gn[10] = { 0 };
+	for (int i = 1; i <= 9; ++i)
+	{
+		for (int j = 1; j <= 9; ++j)
+		{
+			SD& sd = data[i][j];
+			if (sd.num < 0 || sd.num > 9)
+				return false;
+			if (sd.group < 1 || sd.group > 9)
+				return false;
+			gn[sd.group] ++;
+			if (gn[sd.group] > 9)
+				return false;
+			if (!sd.num)
+				continue;
+			for (int k = 1; k <= 9; ++k)
+			{
+				if (i != k && data[k][j].num == sd.num)
+					return false;
+				if (j != k && data[i][k].num == sd.num)
+					return false;
+				short pos = map[sd.group][k];
+				if (pos != i * 10 + j && data[pos / 10][pos % 10].num == sd.num)
+					return false;
+			}
+		}
+	}
+	return true;
+}
+
+void Sudoku::init()
 {
 	memset(row, 0, sizeof(row));
 	memset(col, 0, sizeof(col));
-	memset(data, 0, sizeof(data));
-	memset(this->group, 0, sizeof(this->group));
+	memset(group, 0, sizeof(group));
 	memset(map, 0, sizeof(map));
 	int map_n[10] = {0};
+	for (int i = 1; i < 10; ++i)
+	{
+		for (int j = 1; j < 10; ++j)
+		{
+			row[i][data[i][j].num] = true;
+			col[j][data[i][j].num] = true;
+			group[data[i][j].group][data[i][j].num] = true;
+			map[data[i][j].group][++map_n[data[i][j].group]] = i*10+j;
+		}
+	}
+}
+
+Status Sudoku::set(Res res, Res group)
+{
+	memset(data, 0, sizeof(data));
 	for(int i=1;i<10;++i)
 	{
 		for(int j=1;j<10;++j)
 		{
 			if(group)
-			{
-				if(group[i][j] >= 0 && group[i][j] < 10)
-					data[i][j].group = group[i][j];
-				else
-				{
-					_status = Status::Bad;
-					return _status;
-				}
-				map[group[i][j]][++map_n[group[i][j]]] = i*10+j;
-			}
+				data[i][j].group = group[i][j];
 			else
-			{
 				data[i][j].group = (i-1)/3*3+(j-1)/3+1; // 标准规则数独
-				int n = (i-1)/3*3+(j-1)/3+1;
-				map[n][++map_n[n]] = i*10+j;
-			}
-			if(res[i][j] >= 0 && res[i][j] < 10)
-			{
-				data[i][j].num = res[i][j];
-				row[i][res[i][j]] = true;
-				col[j][res[i][j]] = true;
-				this->group[data[i][j].group][res[i][j]] = true;
-			}
-			else
-			{
-				_status = Status::Bad;
-				return _status;
-			}
+			data[i][j].num = res[i][j];
 		}
 	}
-	_status = Status::Loaded;
-	return scan();
+	if (check())
+	{
+		_status = Status::Loaded;
+		return scan();
+	}
+	_status = Status::Bad;
+	return _status;
 }
 
 Status Sudoku::set(Board res)
 {
 	memset(group, 0, sizeof(group));
-	memset(map, 0, sizeof(map));
-	int map_n[10] = {0};
 	for(int i=1;i<10;++i)
-	{
 		for(int j=1;j<10;++j)
-		{
 			data[i][j] = res[i][j];
-			row[i][data[i][j].num] = true;
-			col[j][data[i][j].num] = true;
-			group[data[i][j].group][data[i][j].num] = true;
-			map[res[i][j].group][++map_n[res[i][j].group]] = i*10+j;
-		}
+	if (check())
+	{
+		_status = Status::Loaded;
+		return scan();
 	}
-	_status = Status::Loaded;
-	return scan();
+	_status = Status::Bad;
+	return _status;
 }
 
 Status Sudoku::scan()
@@ -122,22 +152,27 @@ Status Sudoku::scan()
 				_s = Status::Wrong;
 		}
 	}
-	if(_status == Status::Ok && is_full)
-		_status = _s = Status::Win;
+	if (_status == Status::Ok)
+	{
+		if (is_full)
+			_status = _s = Callback() ? Status::Win : Status::Wrong;
+	}
 	return _s;
 }
 
 Status Sudoku::play(int i, int j, int k, bool is_solve)
 {
-	if(i<1 || i>9 || j<1 || j>9 || data[i][j].num)
+	if (i < 1 || i>9 || j < 1 || j>9 || data[i][j].num)
+	{
+		_status = Status::Error;
 		return Status::Error;
+	}
 	data[i][j].num = k;
 	if(is_solve)
 		data[i][j].who = 2;
 	else
 		data[i][j].who = 1;
-	if(is_solve)
-		_status = Status::Ok;
+	_status = Status::Ok;
 	if(!is_solve && !data[i][j].is[k])
 	{
 		_status = Status::Wrong;
@@ -271,4 +306,19 @@ Status Sudoku::solve(bool is_reset)
 		reset(tmp[i].x, tmp[i].y, true);
 	}
 	return Status::Wrong;
+}
+
+void Sudoku::setBoard(int i, int j, int k)
+{
+	if (i<1 || i>9 || j<1 || j>9)
+		return;
+	data[i][j].num = k;
+	data[i][j].who = 0;
+}
+
+void Sudoku::setGroup(int i, int j, int g)
+{
+	if (i<1 || i>9 || j<1 || j>9)
+		return;
+	data[i][j].group = g;
 }

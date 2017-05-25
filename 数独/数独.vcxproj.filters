@@ -25,12 +25,6 @@
     <ClCompile Include="数独.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="AssemblyInfo.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
-    <ClCompile Include="SDoc.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Sudoku.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -43,12 +37,12 @@
     <ClCompile Include="Form1.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="Modify.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Form1.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="SDoc.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Sudoku.h">
@@ -61,6 +55,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="stdafx.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Modify.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

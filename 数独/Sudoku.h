@@ -20,6 +20,8 @@ public:
 	{
 		_status = Status::Empty;
 	}
+	Sudoku(const Sudoku& sd);
+	virtual bool check();
 	Board get() const // 获取数据
 	{
 		return data;
@@ -56,6 +58,11 @@ public:
 	Status reset(int x, int y, bool is_solve=false);
 	Status solve(bool is_reset=false);
 protected:
+	void setBoard(int x, int y, int k);
+	void setGroup(int x, int y, int g);
+	friend ref class Modify; // 允许Modify窗口对数独数据进行修改
+protected:
+	void init();
 	bool can(int x, int y, int k) // 判断x行y列能否填k
 	{
 		if(data[x][y].num)
@@ -65,4 +72,8 @@ protected:
 		return true;
 	}
 	Status scan(); // 扫描并计算每个格子可填数和有n种填法的小格
+	virtual bool Callback()
+	{
+		return true;
+	}
 };
