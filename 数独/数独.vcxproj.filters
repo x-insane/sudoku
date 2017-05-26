@@ -40,6 +40,9 @@
     <ClCompile Include="Modify.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="SDoc.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Form1.h">
@@ -60,6 +63,9 @@
     <ClInclude Include="Modify.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="SDoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc">
@@ -74,6 +80,9 @@
       <Filter>资源文件</Filter>
     </EmbeddedResource>
     <EmbeddedResource Include="AddSudoku.resx">
+      <Filter>资源文件</Filter>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Modify.resx">
       <Filter>资源文件</Filter>
     </EmbeddedResource>
   </ItemGroup>

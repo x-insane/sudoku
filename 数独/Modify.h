@@ -12,14 +12,16 @@ using namespace System::Drawing;
 /// </summary>
 public ref class Modify : public System::Windows::Forms::Form
 {
-	Sudoku* p_sd;
+	//Sudoku* p_sd;
 	Sudoku* src;
-	System::Windows::Forms::Form^ parent;
+	SDoc^ doc;
+	Form1^ parent;
 private:
 	int getRadioValue();
 	void handle_modify(int x, int y, int k);
 public:
-	Modify(System::Windows::Forms::Form^ parentForm, Sudoku* p);
+	Modify(Form1^ parentForm, Sudoku* p);
+	Modify(Form1^ parentForm);
 
 protected:
 	/// <summary>
@@ -507,6 +509,7 @@ private:
 		this->MaximumSize = System::Drawing::Size(553, 545);
 		this->MinimumSize = System::Drawing::Size(553, 545);
 		this->Name = L"Modify";
+		this->StartPosition = System::Windows::Forms::FormStartPosition::CenterParent;
 		this->Text = L"±à¼­Êý¶À";
 		this->FormClosed += gcnew System::Windows::Forms::FormClosedEventHandler(this, &Modify::Modify_FormClosed);
 		this->ResumeLayout(false);

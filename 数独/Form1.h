@@ -13,37 +13,40 @@ using namespace System::Drawing;
 public ref class Form1 : public System::Windows::Forms::Form
 {
 	Admin^ f_admin;
-	AddSudoku^ f_add_sudoku;
 	int i,j;
 public:
-	Sudoku* p_sd;
+	SDoc^ doc;
 
-private: System::Windows::Forms::MenuStrip^  menuStrip1;
-private: System::Windows::Forms::ToolStripMenuItem^  mi_game;
-private: System::Windows::Forms::ToolStripMenuItem^  mi_restart;
-private: System::Windows::Forms::ToolStripMenuItem^  mi_is_showtip;
-
-private: System::Windows::Forms::Label^  label1;
-private: System::Windows::Forms::ContextMenuStrip^  contextMenuStrip1;
-private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem2;
-private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem3;
-private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem4;
-private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem5;
-private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem6;
-private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem7;
-private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem8;
-private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem9;
-private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem10;
-private: System::Windows::Forms::ContextMenuStrip^  contextMenuStrip2;
-private: System::Windows::Forms::ToolStripMenuItem^  resetijToolStripMenuItem;
-private: System::Windows::Forms::ToolStripMenuItem^  solveToolStripMenuItem;
-private: System::Windows::Forms::ToolStripMenuItem^  answerToolStripMenuItem;
-private: System::Windows::Forms::ToolStripMenuItem^  addsudokuToolStripMenuItem;
-private: System::Windows::Forms::ToolStripMenuItem^  modifysudokuToolStripMenuItem;
-
-private: System::Windows::Forms::ToolStripMenuItem^  mi_manage;
+	private: System::Windows::Forms::MenuStrip^  menuStrip1;
+	private: System::Windows::Forms::ToolStripMenuItem^  mi_game;
+	private: System::Windows::Forms::ToolStripMenuItem^  mi_restart;
+	private: System::Windows::Forms::ToolStripMenuItem^  mi_is_showtip;
+	private: System::Windows::Forms::Label^  label1;
+	private: System::Windows::Forms::ContextMenuStrip^  contextMenuStrip1;
+	private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem2;
+	private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem3;
+	private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem4;
+	private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem5;
+	private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem6;
+	private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem7;
+	private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem8;
+	private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem9;
+	private: System::Windows::Forms::ToolStripMenuItem^  toolStripMenuItem10;
+	private: System::Windows::Forms::ContextMenuStrip^  contextMenuStrip2;
+	private: System::Windows::Forms::ToolStripMenuItem^  resetijToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  solveToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  answerToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  addsudokuToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  modifysudokuToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  fileToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  openToolStripMenuItem;
+	public: System::Windows::Forms::ToolStripMenuItem^  saveToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  fetchToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripSeparator^  toolStripSeparator3;
+	private: System::Windows::Forms::ToolStripMenuItem^  mi_manage;
 
 public:
+	Form1(String^ filename);
 	Form1();
 
 protected:
@@ -73,7 +76,14 @@ private:
 		void InitializeComponent(void)
 		{
 			this->components = (gcnew System::ComponentModel::Container());
+			System::Windows::Forms::ToolStripSeparator^  toolStripSeparator1;
+			System::Windows::Forms::ToolStripSeparator^  toolStripSeparator2;
 			this->menuStrip1 = (gcnew System::Windows::Forms::MenuStrip());
+			this->fileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->openToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->saveToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->toolStripSeparator3 = (gcnew System::Windows::Forms::ToolStripSeparator());
+			this->fetchToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->mi_game = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->mi_restart = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->mi_is_showtip = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -95,25 +105,77 @@ private:
 			this->toolStripMenuItem10 = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->contextMenuStrip2 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
 			this->resetijToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			toolStripSeparator1 = (gcnew System::Windows::Forms::ToolStripSeparator());
+			toolStripSeparator2 = (gcnew System::Windows::Forms::ToolStripSeparator());
 			this->menuStrip1->SuspendLayout();
 			this->contextMenuStrip1->SuspendLayout();
 			this->contextMenuStrip2->SuspendLayout();
 			this->SuspendLayout();
 			// 
+			// toolStripSeparator1
+			// 
+			toolStripSeparator1->Name = L"toolStripSeparator1";
+			toolStripSeparator1->Size = System::Drawing::Size(133, 6);
+			// 
+			// toolStripSeparator2
+			// 
+			toolStripSeparator2->Name = L"toolStripSeparator2";
+			toolStripSeparator2->Size = System::Drawing::Size(133, 6);
+			// 
 			// menuStrip1
 			// 
-			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(2) { this->mi_game, this->mi_manage });
+			this->menuStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(3) {
+				this->fileToolStripMenuItem,
+					this->mi_game, this->mi_manage
+			});
 			this->menuStrip1->Location = System::Drawing::Point(0, 0);
 			this->menuStrip1->Name = L"menuStrip1";
 			this->menuStrip1->Size = System::Drawing::Size(674, 25);
 			this->menuStrip1->TabIndex = 2;
 			this->menuStrip1->Text = L"menuStrip1";
 			// 
+			// fileToolStripMenuItem
+			// 
+			this->fileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(4) {
+				this->openToolStripMenuItem,
+					this->saveToolStripMenuItem, this->toolStripSeparator3, this->fetchToolStripMenuItem
+			});
+			this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
+			this->fileToolStripMenuItem->Size = System::Drawing::Size(44, 21);
+			this->fileToolStripMenuItem->Text = L"文件";
+			// 
+			// openToolStripMenuItem
+			// 
+			this->openToolStripMenuItem->Name = L"openToolStripMenuItem";
+			this->openToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->openToolStripMenuItem->Text = L"打开";
+			this->openToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::openToolStripMenuItem_Click);
+			// 
+			// saveToolStripMenuItem
+			// 
+			this->saveToolStripMenuItem->Name = L"saveToolStripMenuItem";
+			this->saveToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->saveToolStripMenuItem->Text = L"保存";
+			this->saveToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::saveToolStripMenuItem_Click);
+			// 
+			// toolStripSeparator3
+			// 
+			this->toolStripSeparator3->Name = L"toolStripSeparator3";
+			this->toolStripSeparator3->Size = System::Drawing::Size(149, 6);
+			// 
+			// fetchToolStripMenuItem
+			// 
+			this->fetchToolStripMenuItem->Name = L"fetchToolStripMenuItem";
+			this->fetchToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->fetchToolStripMenuItem->Text = L"导出";
+			this->fetchToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::fetchToolStripMenuItem_Click);
+			// 
 			// mi_game
 			// 
-			this->mi_game->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(6) {
+			this->mi_game->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(8) {
 				this->mi_restart,
-					this->mi_is_showtip, this->solveToolStripMenuItem, this->answerToolStripMenuItem, this->addsudokuToolStripMenuItem, this->modifysudokuToolStripMenuItem
+					this->mi_is_showtip, toolStripSeparator2, this->solveToolStripMenuItem, this->answerToolStripMenuItem, toolStripSeparator1, this->addsudokuToolStripMenuItem,
+					this->modifysudokuToolStripMenuItem
 			});
 			this->mi_game->Name = L"mi_game";
 			this->mi_game->Size = System::Drawing::Size(44, 21);
@@ -122,42 +184,42 @@ private:
 			// mi_restart
 			// 
 			this->mi_restart->Name = L"mi_restart";
-			this->mi_restart->Size = System::Drawing::Size(152, 22);
+			this->mi_restart->Size = System::Drawing::Size(136, 22);
 			this->mi_restart->Text = L"重新开始";
 			this->mi_restart->Click += gcnew System::EventHandler(this, &Form1::mi_restart_Click);
 			// 
 			// mi_is_showtip
 			// 
 			this->mi_is_showtip->Name = L"mi_is_showtip";
-			this->mi_is_showtip->Size = System::Drawing::Size(152, 22);
+			this->mi_is_showtip->Size = System::Drawing::Size(136, 22);
 			this->mi_is_showtip->Text = L"显示提示";
 			this->mi_is_showtip->Click += gcnew System::EventHandler(this, &Form1::mi_is_showtip_Click);
 			// 
 			// solveToolStripMenuItem
 			// 
 			this->solveToolStripMenuItem->Name = L"solveToolStripMenuItem";
-			this->solveToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->solveToolStripMenuItem->Size = System::Drawing::Size(136, 22);
 			this->solveToolStripMenuItem->Text = L"模拟解数独";
 			this->solveToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::solveToolStripMenuItem_Click);
 			// 
 			// answerToolStripMenuItem
 			// 
 			this->answerToolStripMenuItem->Name = L"answerToolStripMenuItem";
-			this->answerToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->answerToolStripMenuItem->Size = System::Drawing::Size(136, 22);
 			this->answerToolStripMenuItem->Text = L"显示答案";
 			this->answerToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::answerToolStripMenuItem_Click);
 			// 
 			// addsudokuToolStripMenuItem
 			// 
 			this->addsudokuToolStripMenuItem->Name = L"addsudokuToolStripMenuItem";
-			this->addsudokuToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->addsudokuToolStripMenuItem->Size = System::Drawing::Size(136, 22);
 			this->addsudokuToolStripMenuItem->Text = L"制作数独";
 			this->addsudokuToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::addsudokuToolStripMenuItem_Click);
 			// 
 			// modifysudokuToolStripMenuItem
 			// 
 			this->modifysudokuToolStripMenuItem->Name = L"modifysudokuToolStripMenuItem";
-			this->modifysudokuToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->modifysudokuToolStripMenuItem->Size = System::Drawing::Size(136, 22);
 			this->modifysudokuToolStripMenuItem->Text = L"修改数独";
 			this->modifysudokuToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::modifysudokuToolStripMenuItem_Click);
 			// 
@@ -299,4 +361,7 @@ private:
 	private: System::Void answerToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void addsudokuToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void modifysudokuToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void saveToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void fetchToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void openToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 };

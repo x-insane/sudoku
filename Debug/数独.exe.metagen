@@ -20,16 +20,19 @@ Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c5619
 Class Form1: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Fields:
-    Sudoku* p_sd : Public
+    SDoc doc : Public
+    System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem : Public
 Class AddSudoku: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(Form1): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
 Class Admin: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
-    Void .ctor(System.Windows.Forms.Form): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(Form1): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Methods:
     reload(): PrivateScope, Public, HideBySig
 Class Modify: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
-    Void .ctor(System.Windows.Forms.Form, Sudoku*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(Form1): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(Form1, Sudoku*): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName

@@ -16,10 +16,7 @@ protected:
 	SD data[10][10];
 	Status _status; // enum class 方式
 public:
-	Sudoku()
-	{
-		_status = Status::Empty;
-	}
+	Sudoku();
 	Sudoku(const Sudoku& sd);
 	virtual bool check();
 	Board get() const // 获取数据
@@ -57,6 +54,9 @@ public:
 	Status reset();
 	Status reset(int x, int y, bool is_solve=false);
 	Status solve(bool is_reset=false);
+	virtual void Draw(Graphics^ dc, DSS dss);
+	virtual bool Serialize(BinaryWriter^ bw);
+	virtual bool Serialize(BinaryReader^ br);
 protected:
 	void setBoard(int x, int y, int k);
 	void setGroup(int x, int y, int g);

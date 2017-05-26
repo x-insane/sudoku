@@ -16,6 +16,23 @@ struct SD // 设计数独小格
 	bool is[10]; // 表示该格能否填1-9的数
 };
 
+typedef struct DrawSudokuStruct
+{
+	float left, top;
+	float a;
+	float penw = 3;
+
+	enum
+	{
+		DS_Main,
+		DS_Modify,
+		DS_Admin
+	}type;
+
+	float sfontw = 8; // Modify窗口专用
+	bool is_draw_group = true; // Modify窗口专用
+}DSS;
+
 enum class Status // enum class 方式 
 {
 	Empty, // 表示还未加载数独资源
@@ -27,19 +44,29 @@ enum class Status // enum class 方式
 	Win    // 表示全部填满且正确
 };
 
+enum
+{
+	SD_Standard,
+	SD_X,
+	SD_Percent
+};
+
 typedef const SD(*Board)[10];
 typedef const int(*Res)[10];
 
+// 预声明所有类
 ref class Form1;
 ref class Admin;
 ref class AddSudoku;
 ref class Modify;
+ref class SDoc;
 class Sudoku;
-struct SD;
 
+// 预加载所有头文件
 #include "Form1.h"
 #include "AddSudoku.h"
 #include "Admin.h"
 #include "Modify.h"
 
 #include "Sudoku.h"
+#include "SDoc.h"

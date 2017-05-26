@@ -2,6 +2,12 @@
 #include "memory.h"
 
 
+Sudoku::Sudoku()
+{
+	memset(data, 0, sizeof(data));
+	_status = Status::Empty;
+}
+
 Sudoku::Sudoku(const Sudoku & sd)
 {
 	for (int i = 1; i <= 9; ++i)
@@ -306,6 +312,118 @@ Status Sudoku::solve(bool is_reset)
 		reset(tmp[i].x, tmp[i].y, true);
 	}
 	return Status::Wrong;
+}
+
+void Sudoku::Draw(Graphics^ dc, DSS dss)
+{
+	Board board = data;
+	float a = dss.a;
+	float x = dss.left, y = dss.top;
+	Pen^ pen = gcnew Pen(Color::Black, dss.penw);
+
+	System::Drawing::Font^ font = gcnew System::Drawing::Font("You yuan", a / 18);
+	System::Drawing::Font^ sfont = gcnew System::Drawing::Font("You yuan", dss.sfontw);
+	StringFormat^ sf = gcnew StringFormat;
+	sf->LineAlignment = StringAlignment::Center;
+	sf->Alignment = StringAlignment::Center;
+
+	for (int i = 0; i < 9; ++i)
+	{
+		for (int j = 0; j < 9; ++j)
+		{
+			Rectangle rect = Rectangle(int(x + i*a / 9 + 2 + 0.5), int(y + j*a / 9 + 2 + 0.5), int(a / 9 - 1), int(a / 9 - 1));
+			switch (board[j + 1][i + 1].group)
+			{
+			case 1:
+				dc->FillRectangle(gcnew SolidBrush(Color::FromArgb(0xFFC1FFC1)), rect);
+				break;
+			case 2:
+				dc->FillRectangle(Brushes::LightGoldenrodYellow, rect);
+				break;
+			case 3:
+				dc->FillRectangle(Brushes::PowderBlue, rect);
+				break;
+			case 4:
+				dc->FillRectangle(Brushes::Lavender, rect);
+				break;
+			case 5:
+				dc->FillRectangle(gcnew SolidBrush(Color::FromArgb(0xFFFFE1FF)), rect);
+				break;
+			case 6:
+				dc->FillRectangle(gcnew SolidBrush(Color::FromArgb(0xFFF6E6CC)), rect);
+				break;
+			case 7:
+				dc->FillRectangle(gcnew SolidBrush(Color::FromArgb(0xFFF0DBCE)), rect);
+				break;
+			case 8:
+				dc->FillRectangle(Brushes::PaleTurquoise, rect);
+				break;
+			case 9:
+				dc->FillRectangle(gcnew SolidBrush(Color::FromArgb(0xFFEED2EE)), rect);
+				break;
+			}
+		}
+	}
+
+	for (int i = 0; i<10; ++i)
+	{
+		// 黑色线画边框，灰色线画内部小格
+		dc->DrawLine(i % 9 ? Pens::LightGray : pen, x + i*a / 9, y, x + i*a / 9, y + a);
+		dc->DrawLine(i % 9 ? Pens::LightGray : pen, x, y + i*a / 9, x + a, y + i*a / 9);
+	}
+
+	for (int i = 0; i < 9; ++i)
+	{
+		for (int j = 0; j < 9; ++j)
+		{
+			Rectangle rect = Rectangle(int(x + i*a / 9 + 2 + 0.5), int(y + j*a / 9 + 2 + 0.5), int(a / 9 - 1), int(a / 9 - 1));
+			if (i && board[j + 1][i + 1].group != board[j + 1][i].group)
+				dc->DrawLine(pen, x + i*a / 9, y + j*a / 9, x + i*a / 9, y + (j + 1)*a / 9); // 用粗线画左边框
+			if (j && board[j + 1][i + 1].group != board[j][i + 1].group)
+				dc->DrawLine(pen, x + i*a / 9, y + j*a / 9, x + (i + 1)*a / 9, y + j*a / 9); // 用粗线画上边框
+			System::Drawing::Brush^ brush = Brushes::Black;
+			if (dss.type == DSS::DS_Main)
+			{
+				if (board[j + 1][i + 1].who == 1)
+					brush = Brushes::Blue;
+				else if (board[j + 1][i + 1].who == 2)
+					brush = Brushes::Green;
+				else if (board[j + 1][i + 1].who == 3)
+					brush = Brushes::Red;
+			}
+			if (board[j + 1][i + 1].num && (dss.type == DSS::DS_Main || !board[j + 1][i + 1].who))
+				dc->DrawString(board[j + 1][i + 1].num.ToString(), font, brush, rect, sf);
+			if(board[j + 1][i + 1].group && dss.type == DSS::DS_Modify && dss.is_draw_group)
+				dc->DrawString(board[j + 1][i + 1].group.ToString(), sfont, Brushes::Blue, rect);
+		}
+	}
+}
+
+bool Sudoku::Serialize(BinaryWriter ^ bw)
+{
+	bw->Write(Byte(SD_Standard));
+	for (int i = 1; i < 10; ++i)
+		for (int j = 1; j < 10; ++j)
+			bw->Write(Byte(data[i][j].who ? 0 : data[i][j].num));
+	for (int i = 1; i < 10; ++i)
+		for (int j = 1; j < 10; ++j)
+			bw->Write(Byte(data[i][j].group));
+	return true;
+}
+
+bool Sudoku::Serialize(BinaryReader ^ br)
+{
+	int d[10][10];
+	int g[10][10];
+	for (int i = 1; i < 10; ++i)
+		for (int j = 1; j < 10; ++j)
+			d[i][j] = br->ReadByte();
+	for (int i = 1; i < 10; ++i)
+		for (int j = 1; j < 10; ++j)
+			g[i][j] = br->ReadByte();
+	if (set(d, g) == Status::Bad)
+		return false;
+	return true;
 }
 
 void Sudoku::setBoard(int i, int j, int k)

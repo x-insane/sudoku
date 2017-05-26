@@ -33,7 +33,7 @@ System::Void AddSudoku::button2_Click(System::Object^  sender, System::EventArgs
 			g[i][j] = int(group[k++] - '0');
 		}
 	}
-	f_parent->p_sd->set(d, g);
+	f_parent->doc->sd()->set(d, g);
 }
 
 System::Void AddSudoku::button1_Click(System::Object^  sender, System::EventArgs^  e)
@@ -74,7 +74,7 @@ System::Void AddSudoku::button1_Click(System::Object^  sender, System::EventArgs
 	Stream^ fs = sf->OpenFile();
 	if(!fs)
 	{
-		MessageBox::Show(L"无法打开目标文件，请检查文件目录是否正确，是否有读写该位置文件的权限。", L"错误");
+		MessageBox::Show(L"无法打开目标文件，请检查文件目录是否正确，以及是否有读写该文件的权限。", L"错误");
 		return;
 	}
 	BinaryWriter^ writer = gcnew BinaryWriter(fs);

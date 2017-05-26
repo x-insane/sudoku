@@ -12,25 +12,11 @@ int main(array<System::String ^> ^args)
 	Application::SetCompatibleTextRenderingDefault(false); 
 
 	// 创建主窗口并运行它
-	Form1^ form = gcnew Form1();
-	if(args->Length > 0)
-	{
-		if(File::Exists(args[0]))
-		{
-			FileStream^ fs = File::Open(args[0], FileMode::Open, FileAccess::Read);
-			BinaryReader^ reader = gcnew BinaryReader(fs);
-			int d[10][10], g[10][10];
-			for(int i=1;i<10;++i)
-				for(int j=1;j<10;++j)
-					d[i][j] = reader->ReadInt32();
-			for(int i=1;i<10;++i)
-				for(int j=1;j<10;++j)
-					g[i][j] = reader->ReadInt32();
-			form->p_sd->set(d, g);
-			reader->Close();
-			fs->Close();
-		}
-	}
+	Form1^ form;
+	if (args->Length > 0 && File::Exists(args[0]))
+		form = gcnew Form1(args[0]);
+	else
+		form = gcnew Form1();
 	Application::Run(form);
 	return 0;
 }

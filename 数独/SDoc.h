@@ -1,14 +1,22 @@
 #pragma once
 
-class SDoc
+ref class SDoc
 {
-protected:
-	Res data;
-	Res map;
-	char name[256];
-	char author[256];
-	unsigned long long time;
+	String^ filename;
+	Sudoku* p_sd = 0;
 public:
-	static bool save();
-	static Sudoku* open();
+	SDoc(Sudoku* p);
+	SDoc(String^ filename);
+	Sudoku* sd()
+	{
+		return p_sd;
+	}
+	String^ getFilename()
+	{
+		return filename;
+	}
+	bool open(Sudoku* p);
+	bool open(String^ filename);
+	bool save();
+	bool save(String^ filename);
 };
