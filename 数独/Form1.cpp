@@ -251,5 +251,10 @@ void Form1::modify_ok()
 
 void Form1::modify_cancel()
 {
+	if (!doc->isnew())
+	{
+		statusText->Text = "¾ÍÐ÷";
+		Text = "Êý¶À - " + doc->getFilename();
+	}
 	Show();
 }

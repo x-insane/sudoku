@@ -185,7 +185,8 @@ System::Void Modify::button6_Click(System::Object ^ sender, System::EventArgs ^ 
 		sf->Filter = L"Êý¶ÀÎÄ¼þ (*.sd)|*.sd";
 		if (sf->ShowDialog() == Windows::Forms::DialogResult::Cancel)
 			return;
-		doc->save(sf->FileName);
+		if (doc->save(sf->FileName))
+			msif->sdoc()->open(sf->FileName);
 		msif->modify_cancel();
 	}
 	else
