@@ -26,6 +26,8 @@ bool SDoc::open(String ^ filename)
 	try
 	{
 		FileInfo^ fi = gcnew FileInfo(filename);
+		if (!fi->Exists)
+			return false;
 		FileStream^ fs = fi->Open(FileMode::Open, FileAccess::Read);
 		BinaryReader^ br = gcnew BinaryReader(fs);
 		if (p_sd && this->filename)

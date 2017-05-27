@@ -43,6 +43,9 @@
     <ClCompile Include="SDoc.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
+    <ClCompile Include="MyListView.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Form1.h">
@@ -64,6 +67,9 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="SDoc.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MyListView.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

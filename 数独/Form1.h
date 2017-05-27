@@ -10,7 +10,7 @@ using namespace System::Drawing;
 /// <summary>
 /// Form1 摘要
 /// </summary>
-public ref class Form1 : public System::Windows::Forms::Form
+public ref class Form1 : public System::Windows::Forms::Form, ModifySuccess
 {
 	Admin^ f_admin;
 	int i,j;
@@ -43,11 +43,20 @@ public:
 	public: System::Windows::Forms::ToolStripMenuItem^  saveToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  fetchToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripSeparator^  toolStripSeparator3;
+	private: System::Windows::Forms::ToolStripMenuItem^  reloadToolStripMenuItem;
+	private: System::Windows::Forms::StatusStrip^  statusStrip1;
+	public: System::Windows::Forms::ToolStripStatusLabel^  statusText;
 	private: System::Windows::Forms::ToolStripMenuItem^  mi_manage;
 
 public:
 	Form1(String^ filename);
 	Form1();
+	virtual void modify_ok();
+	virtual void modify_cancel();
+	virtual SDoc^ sdoc()
+	{
+		return doc;
+	}
 
 protected:
 	/// <summary>
@@ -82,6 +91,7 @@ private:
 			this->fileToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->openToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->saveToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->reloadToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->toolStripSeparator3 = (gcnew System::Windows::Forms::ToolStripSeparator());
 			this->fetchToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->mi_game = (gcnew System::Windows::Forms::ToolStripMenuItem());
@@ -105,11 +115,14 @@ private:
 			this->toolStripMenuItem10 = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->contextMenuStrip2 = (gcnew System::Windows::Forms::ContextMenuStrip(this->components));
 			this->resetijToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
+			this->statusStrip1 = (gcnew System::Windows::Forms::StatusStrip());
+			this->statusText = (gcnew System::Windows::Forms::ToolStripStatusLabel());
 			toolStripSeparator1 = (gcnew System::Windows::Forms::ToolStripSeparator());
 			toolStripSeparator2 = (gcnew System::Windows::Forms::ToolStripSeparator());
 			this->menuStrip1->SuspendLayout();
 			this->contextMenuStrip1->SuspendLayout();
 			this->contextMenuStrip2->SuspendLayout();
+			this->statusStrip1->SuspendLayout();
 			this->SuspendLayout();
 			// 
 			// toolStripSeparator1
@@ -136,9 +149,9 @@ private:
 			// 
 			// fileToolStripMenuItem
 			// 
-			this->fileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(4) {
+			this->fileToolStripMenuItem->DropDownItems->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(5) {
 				this->openToolStripMenuItem,
-					this->saveToolStripMenuItem, this->toolStripSeparator3, this->fetchToolStripMenuItem
+					this->saveToolStripMenuItem, this->reloadToolStripMenuItem, this->toolStripSeparator3, this->fetchToolStripMenuItem
 			});
 			this->fileToolStripMenuItem->Name = L"fileToolStripMenuItem";
 			this->fileToolStripMenuItem->Size = System::Drawing::Size(44, 21);
@@ -147,26 +160,33 @@ private:
 			// openToolStripMenuItem
 			// 
 			this->openToolStripMenuItem->Name = L"openToolStripMenuItem";
-			this->openToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->openToolStripMenuItem->Size = System::Drawing::Size(124, 22);
 			this->openToolStripMenuItem->Text = L"打开";
 			this->openToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::openToolStripMenuItem_Click);
 			// 
 			// saveToolStripMenuItem
 			// 
 			this->saveToolStripMenuItem->Name = L"saveToolStripMenuItem";
-			this->saveToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->saveToolStripMenuItem->Size = System::Drawing::Size(124, 22);
 			this->saveToolStripMenuItem->Text = L"保存";
 			this->saveToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::saveToolStripMenuItem_Click);
+			// 
+			// reloadToolStripMenuItem
+			// 
+			this->reloadToolStripMenuItem->Name = L"reloadToolStripMenuItem";
+			this->reloadToolStripMenuItem->Size = System::Drawing::Size(124, 22);
+			this->reloadToolStripMenuItem->Text = L"重新加载";
+			this->reloadToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::reloadToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator3
 			// 
 			this->toolStripSeparator3->Name = L"toolStripSeparator3";
-			this->toolStripSeparator3->Size = System::Drawing::Size(149, 6);
+			this->toolStripSeparator3->Size = System::Drawing::Size(121, 6);
 			// 
 			// fetchToolStripMenuItem
 			// 
 			this->fetchToolStripMenuItem->Name = L"fetchToolStripMenuItem";
-			this->fetchToolStripMenuItem->Size = System::Drawing::Size(152, 22);
+			this->fetchToolStripMenuItem->Size = System::Drawing::Size(124, 22);
 			this->fetchToolStripMenuItem->Text = L"导出";
 			this->fetchToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::fetchToolStripMenuItem_Click);
 			// 
@@ -327,11 +347,27 @@ private:
 			this->resetijToolStripMenuItem->Text = L"取消填入";
 			this->resetijToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::resetijToolStripMenuItem_Click);
 			// 
+			// statusStrip1
+			// 
+			this->statusStrip1->Items->AddRange(gcnew cli::array< System::Windows::Forms::ToolStripItem^  >(1) { this->statusText });
+			this->statusStrip1->Location = System::Drawing::Point(0, 570);
+			this->statusStrip1->Name = L"statusStrip1";
+			this->statusStrip1->Size = System::Drawing::Size(674, 22);
+			this->statusStrip1->TabIndex = 4;
+			this->statusStrip1->Text = L"statusStrip1";
+			// 
+			// statusText
+			// 
+			this->statusText->Name = L"statusText";
+			this->statusText->Size = System::Drawing::Size(56, 17);
+			this->statusText->Text = L"默认数独";
+			// 
 			// Form1
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 12);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(674, 592);
+			this->Controls->Add(this->statusStrip1);
 			this->Controls->Add(this->label1);
 			this->Controls->Add(this->menuStrip1);
 			this->MainMenuStrip = this->menuStrip1;
@@ -343,6 +379,8 @@ private:
 			this->menuStrip1->PerformLayout();
 			this->contextMenuStrip1->ResumeLayout(false);
 			this->contextMenuStrip2->ResumeLayout(false);
+			this->statusStrip1->ResumeLayout(false);
+			this->statusStrip1->PerformLayout();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
@@ -364,4 +402,5 @@ private:
 	private: System::Void saveToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void fetchToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void openToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void reloadToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 };

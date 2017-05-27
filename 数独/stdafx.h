@@ -2,6 +2,15 @@
 
 #define min(a ,b) ((a)<(b)?(a):(b))
 
+// 预声明所有结构、类和接口
+ref class Form1;
+ref class Admin;
+ref class AddSudoku;
+ref class Modify;
+ref class SDoc;
+ref class MyListView;
+class Sudoku;
+
 struct SD // 设计数独小格
 {
 	short num;
@@ -22,7 +31,7 @@ typedef struct DrawSudokuStruct
 	float a;
 	float penw = 3;
 
-	enum
+	enum // 窗口类型
 	{
 		DS_Main,
 		DS_Modify,
@@ -44,6 +53,7 @@ enum class Status // enum class 方式
 	Win    // 表示全部填满且正确
 };
 
+// 数独种类
 enum
 {
 	SD_Standard,
@@ -51,16 +61,16 @@ enum
 	SD_Percent
 };
 
+// 预声明类型别名
 typedef const SD(*Board)[10];
 typedef const int(*Res)[10];
 
-// 预声明所有类
-ref class Form1;
-ref class Admin;
-ref class AddSudoku;
-ref class Modify;
-ref class SDoc;
-class Sudoku;
+public interface class ModifySuccess // 修改数独后请求重新载入
+{
+	void modify_ok();
+	void modify_cancel();
+	SDoc^ sdoc();
+};
 
 // 预加载所有头文件
 #include "Form1.h"
@@ -70,3 +80,4 @@ class Sudoku;
 
 #include "Sudoku.h"
 #include "SDoc.h"
+#include "MyListView.h"

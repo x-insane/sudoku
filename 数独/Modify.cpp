@@ -1,17 +1,33 @@
 #include "stdafx.h"
 #include "Modify.h"
 
-Modify::Modify(Form1 ^ parentForm, Sudoku * p) : src(p), parent(parentForm)
+/*
+Modify::Modify(ModifySuccess^ m, Sudoku * p) : src(p), msif(m)
 {
 	InitializeComponent();
 	doc = gcnew SDoc(new Sudoku(*p));
 	doc->sd()->reset();
-}
+}*/
 
-Modify::Modify(Form1 ^ parentForm) : parent(parentForm)
+Modify::Modify(ModifySuccess^ m, bool is) : msif(m), isnew(is)
 {
 	InitializeComponent();
-	doc = gcnew SDoc(new Sudoku());
+	if (isnew)
+	{
+		doc = gcnew SDoc(new Sudoku());
+		p_sd = doc->sd();
+	}
+	else if (m->sdoc()->isnew())
+	{
+		doc = gcnew SDoc(new Sudoku(*m->sdoc()->sd()));
+		p_sd = doc->sd();
+		isnew = true;
+	}
+	else
+	{
+		doc = m->sdoc();
+		p_sd = new Sudoku(*doc->sd());
+	}
 }
 
 System::Void Modify::label2_Paint(System::Object ^ sender, System::Windows::Forms::PaintEventArgs ^ e)
@@ -29,13 +45,14 @@ System::Void Modify::label2_Paint(System::Object ^ sender, System::Windows::Form
 	dss.penw = 2;
 	dss.type = DSS::DS_Modify;
 	dss.is_draw_group = checkBox1->Checked;
-	doc->sd()->Draw(dc, dss);
+	p_sd->Draw(dc, dss);
 }
 
 System::Void Modify::Modify_FormClosed(System::Object ^ sender, System::Windows::Forms::FormClosedEventArgs ^ e)
 {
-	parent->Show();
-	delete doc->sd();
+	if (e->CloseReason == CloseReason::UserClosing)
+		msif->modify_cancel();
+	delete p_sd;
 }
 
 System::Void Modify::label2_MouseDown(System::Object ^ sender, System::Windows::Forms::MouseEventArgs ^ e)
@@ -58,13 +75,13 @@ System::Void Modify::label2_MouseMove(System::Object ^ sender, System::Windows::
 void Modify::handle_modify(int x, int y, int v)
 {
 	if (v >= 1 && v <= 9)
-		doc->sd()->setBoard(x, y, v);
+		p_sd->setBoard(x, y, v);
 	else if (v >= 10 && v <= 18)
-		doc->sd()->setGroup(x, y, v - 9);
+		p_sd->setGroup(x, y, v - 9);
 	else if(v == 19)
-		doc->sd()->setBoard(x, y, 0);
+		p_sd->setBoard(x, y, 0);
 	else if (v == 20)
-		doc->sd()->setGroup(x, y, 0);
+		p_sd->setGroup(x, y, 0);
 	label2->Invalidate();
 }
 
@@ -119,8 +136,8 @@ System::Void Modify::button1_Click(System::Object ^ sender, System::EventArgs ^ 
 	{
 		for (int j = 1; j < 10; ++j)
 		{
-			doc->sd()->setBoard(i, j, 0);
-			doc->sd()->setGroup(i, j, 0);
+			p_sd->setBoard(i, j, 0);
+			p_sd->setGroup(i, j, 0);
 		}
 	}
 	label2->Invalidate();
@@ -130,7 +147,7 @@ System::Void Modify::button2_Click(System::Object ^ sender, System::EventArgs ^ 
 {
 	for (int i = 1; i < 10; ++i)
 		for (int j = 1; j < 10; ++j)
-			doc->sd()->setBoard(i, j, 0);
+			p_sd->setBoard(i, j, 0);
 	label2->Invalidate();
 }
 
@@ -138,7 +155,7 @@ System::Void Modify::button3_Click(System::Object ^ sender, System::EventArgs ^ 
 {
 	for (int i = 1; i < 10; ++i)
 		for (int j = 1; j < 10; ++j)
-			doc->sd()->setGroup(i, j, 0);
+			p_sd->setGroup(i, j, 0);
 	label2->Invalidate();
 }
 
@@ -146,7 +163,7 @@ System::Void Modify::button4_Click(System::Object ^ sender, System::EventArgs ^ 
 {
 	for (int i = 1; i <= 9; ++i)
 		for (int j = 1; j <= 9; ++j)
-			doc->sd()->setGroup(i, j, (i - 1) / 3 * 3 + (j - 1) / 3 + 1);
+			p_sd->setGroup(i, j, (i - 1) / 3 * 3 + (j - 1) / 3 + 1);
 	label2->Invalidate();
 }
 
@@ -157,32 +174,32 @@ System::Void Modify::button5_Click(System::Object ^ sender, System::EventArgs ^ 
 
 System::Void Modify::button6_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
-	if (!doc->sd()->check())
+	if (!p_sd->check())
 	{
 		MessageBox::Show("不符合要求，暂不能提交！");
 		return;
 	}
-	if (src)
-	{
-		*src = *doc->sd();
-		src->reset();
-		if (parent->doc->getFilename())
-			parent->saveToolStripMenuItem->Enabled = true;
-	}
-	else
+	if (isnew)
 	{
 		SaveFileDialog^ sf = gcnew SaveFileDialog();
 		sf->Filter = L"数独文件 (*.sd)|*.sd";
 		if (sf->ShowDialog() == Windows::Forms::DialogResult::Cancel)
 			return;
 		doc->save(sf->FileName);
+		msif->modify_cancel();
+	}
+	else
+	{
+		*doc->sd() = *p_sd;
+		doc->save();
+		msif->modify_ok();
 	}
 	Close();
 }
 
 System::Void Modify::button7_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
-	if (doc->sd()->check())
+	if (p_sd->check())
 		MessageBox::Show("符合要求，可以提交！");
 	else
 		MessageBox::Show("不符合要求，暂不能提交！");

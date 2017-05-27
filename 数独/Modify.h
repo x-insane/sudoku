@@ -12,16 +12,15 @@ using namespace System::Drawing;
 /// </summary>
 public ref class Modify : public System::Windows::Forms::Form
 {
-	//Sudoku* p_sd;
-	Sudoku* src;
 	SDoc^ doc;
-	Form1^ parent;
+	bool isnew;
+	Sudoku* p_sd;
+	ModifySuccess^ msif;
 private:
 	int getRadioValue();
 	void handle_modify(int x, int y, int k);
 public:
-	Modify(Form1^ parentForm, Sudoku* p);
-	Modify(Form1^ parentForm);
+	Modify(ModifySuccess^ m, bool isnew);
 
 protected:
 	/// <summary>

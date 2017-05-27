@@ -19,4 +19,14 @@ public:
 	bool open(String^ filename);
 	bool save();
 	bool save(String^ filename);
+	bool isnew()
+	{
+		return filename ? false : true;
+	}
+	bool reload()
+	{
+		if (!filename)
+			return false;
+		return open(filename);
+	}
 };
