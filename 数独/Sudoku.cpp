@@ -178,7 +178,8 @@ Status Sudoku::play(int i, int j, int k, bool is_solve)
 		data[i][j].who = 2;
 	else
 		data[i][j].who = 1;
-	_status = Status::Ok;
+	if(_status != Status::Wrong)
+		_status = Status::Ok;
 	if(!is_solve && !data[i][j].is[k])
 	{
 		_status = Status::Wrong;
@@ -389,7 +390,7 @@ void Sudoku::Draw(Graphics^ dc, DSS dss)
 				else if (board[j + 1][i + 1].who == 2)
 					brush = Brushes::Green;
 				else if (board[j + 1][i + 1].who == 3)
-					brush = Brushes::Red;
+					brush = dss.is_show_tip ? Brushes::Red : Brushes::Blue;
 			}
 			if (board[j + 1][i + 1].num && (dss.type == DSS::DS_Main || !board[j + 1][i + 1].who))
 				dc->DrawString(board[j + 1][i + 1].num.ToString(), font, brush, rect, sf);

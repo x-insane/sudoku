@@ -71,6 +71,7 @@ System::Void Form1::label1_Paint(System::Object^  sender, System::Windows::Forms
 	dss.top = y;
 	dss.penw = 3;
 	dss.type = DSS::DS_Main;
+	dss.is_show_tip = mi_is_showtip->Checked;
 
 	doc->sd()->Draw(dc, dss);
 }
@@ -129,7 +130,7 @@ System::Void Form1::handle_play(System::Object^  sender, System::EventArgs^  e)
 {
 	int k = int::Parse(sender->ToString());
 	doc->sd()->play(i, j, k);
-	statusText->Text = %String(doc->sd()->status_string());
+	statusText->Text = %String(doc->sd()->status_string(mi_is_showtip->Checked));
 	label1->Invalidate(true);
 	if(doc->sd()->status() == Status::Win)
 		MessageBox::Show(L"恭喜你完成了整个数独！", L"游戏结束");
@@ -151,7 +152,7 @@ System::Void Form1::mi_restart_Click(System::Object^  sender, System::EventArgs^
 System::Void Form1::resetijToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
 {
 	doc->sd()->reset(i, j);
-	statusText->Text = %String(doc->sd()->status_string());
+	statusText->Text = %String(doc->sd()->status_string(mi_is_showtip->Checked));
 	label1->Invalidate(true);
 }
 
@@ -166,7 +167,7 @@ System::Void Form1::solveToolStripMenuItem_Click(System::Object^  sender, System
 		MessageBox::Show(L"当前状态没有可行解", L"提示");
 		break;
 	}
-	statusText->Text = %String(doc->sd()->status_string());
+	statusText->Text = %String(doc->sd()->status_string(mi_is_showtip->Checked));
 	label1->Invalidate(true);
 }
 
@@ -181,7 +182,7 @@ System::Void Form1::answerToolStripMenuItem_Click(System::Object^  sender, Syste
 		MessageBox::Show(L"当前状态没有可行解", L"提示");
 		break;
 	}
-	statusText->Text = %String(doc->sd()->status_string());
+	statusText->Text = %String(doc->sd()->status_string(mi_is_showtip->Checked));
 	label1->Invalidate(true);
 }
 
@@ -241,6 +242,12 @@ System::Void Form1::reloadToolStripMenuItem_Click(System::Object ^ sender, Syste
 	else
 		statusText->Text = "已重新加载数独文件";
 	label1->Invalidate();
+}
+
+System::Void Form1::mi_is_showtip_CheckedChanged(System::Object ^ sender, System::EventArgs ^ e)
+{
+	label1->Invalidate();
+	statusText->Text = %String(doc->sd()->status_string(mi_is_showtip->Checked));
 }
 
 void Form1::modify_ok()

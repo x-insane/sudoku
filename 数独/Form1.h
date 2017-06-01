@@ -128,12 +128,12 @@ private:
 			// toolStripSeparator1
 			// 
 			toolStripSeparator1->Name = L"toolStripSeparator1";
-			toolStripSeparator1->Size = System::Drawing::Size(133, 6);
+			toolStripSeparator1->Size = System::Drawing::Size(149, 6);
 			// 
 			// toolStripSeparator2
 			// 
 			toolStripSeparator2->Name = L"toolStripSeparator2";
-			toolStripSeparator2->Size = System::Drawing::Size(133, 6);
+			toolStripSeparator2->Size = System::Drawing::Size(149, 6);
 			// 
 			// menuStrip1
 			// 
@@ -160,33 +160,34 @@ private:
 			// openToolStripMenuItem
 			// 
 			this->openToolStripMenuItem->Name = L"openToolStripMenuItem";
-			this->openToolStripMenuItem->Size = System::Drawing::Size(124, 22);
+			this->openToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->openToolStripMenuItem->Text = L"打开";
 			this->openToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::openToolStripMenuItem_Click);
 			// 
 			// saveToolStripMenuItem
 			// 
 			this->saveToolStripMenuItem->Name = L"saveToolStripMenuItem";
-			this->saveToolStripMenuItem->Size = System::Drawing::Size(124, 22);
+			this->saveToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->saveToolStripMenuItem->Text = L"保存";
+			this->saveToolStripMenuItem->Visible = false;
 			this->saveToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::saveToolStripMenuItem_Click);
 			// 
 			// reloadToolStripMenuItem
 			// 
 			this->reloadToolStripMenuItem->Name = L"reloadToolStripMenuItem";
-			this->reloadToolStripMenuItem->Size = System::Drawing::Size(124, 22);
+			this->reloadToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->reloadToolStripMenuItem->Text = L"重新加载";
 			this->reloadToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::reloadToolStripMenuItem_Click);
 			// 
 			// toolStripSeparator3
 			// 
 			this->toolStripSeparator3->Name = L"toolStripSeparator3";
-			this->toolStripSeparator3->Size = System::Drawing::Size(121, 6);
+			this->toolStripSeparator3->Size = System::Drawing::Size(149, 6);
 			// 
 			// fetchToolStripMenuItem
 			// 
 			this->fetchToolStripMenuItem->Name = L"fetchToolStripMenuItem";
-			this->fetchToolStripMenuItem->Size = System::Drawing::Size(124, 22);
+			this->fetchToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->fetchToolStripMenuItem->Text = L"导出";
 			this->fetchToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::fetchToolStripMenuItem_Click);
 			// 
@@ -204,42 +205,43 @@ private:
 			// mi_restart
 			// 
 			this->mi_restart->Name = L"mi_restart";
-			this->mi_restart->Size = System::Drawing::Size(136, 22);
+			this->mi_restart->Size = System::Drawing::Size(152, 22);
 			this->mi_restart->Text = L"重新开始";
 			this->mi_restart->Click += gcnew System::EventHandler(this, &Form1::mi_restart_Click);
 			// 
 			// mi_is_showtip
 			// 
 			this->mi_is_showtip->Name = L"mi_is_showtip";
-			this->mi_is_showtip->Size = System::Drawing::Size(136, 22);
+			this->mi_is_showtip->Size = System::Drawing::Size(152, 22);
 			this->mi_is_showtip->Text = L"显示提示";
+			this->mi_is_showtip->CheckedChanged += gcnew System::EventHandler(this, &Form1::mi_is_showtip_CheckedChanged);
 			this->mi_is_showtip->Click += gcnew System::EventHandler(this, &Form1::mi_is_showtip_Click);
 			// 
 			// solveToolStripMenuItem
 			// 
 			this->solveToolStripMenuItem->Name = L"solveToolStripMenuItem";
-			this->solveToolStripMenuItem->Size = System::Drawing::Size(136, 22);
+			this->solveToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->solveToolStripMenuItem->Text = L"模拟解数独";
 			this->solveToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::solveToolStripMenuItem_Click);
 			// 
 			// answerToolStripMenuItem
 			// 
 			this->answerToolStripMenuItem->Name = L"answerToolStripMenuItem";
-			this->answerToolStripMenuItem->Size = System::Drawing::Size(136, 22);
+			this->answerToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->answerToolStripMenuItem->Text = L"显示答案";
 			this->answerToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::answerToolStripMenuItem_Click);
 			// 
 			// addsudokuToolStripMenuItem
 			// 
 			this->addsudokuToolStripMenuItem->Name = L"addsudokuToolStripMenuItem";
-			this->addsudokuToolStripMenuItem->Size = System::Drawing::Size(136, 22);
+			this->addsudokuToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->addsudokuToolStripMenuItem->Text = L"制作数独";
 			this->addsudokuToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::addsudokuToolStripMenuItem_Click);
 			// 
 			// modifysudokuToolStripMenuItem
 			// 
 			this->modifysudokuToolStripMenuItem->Name = L"modifysudokuToolStripMenuItem";
-			this->modifysudokuToolStripMenuItem->Size = System::Drawing::Size(136, 22);
+			this->modifysudokuToolStripMenuItem->Size = System::Drawing::Size(152, 22);
 			this->modifysudokuToolStripMenuItem->Text = L"修改数独";
 			this->modifysudokuToolStripMenuItem->Click += gcnew System::EventHandler(this, &Form1::modifysudokuToolStripMenuItem_Click);
 			// 
@@ -403,4 +405,5 @@ private:
 	private: System::Void fetchToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void openToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void reloadToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void mi_is_showtip_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
 };

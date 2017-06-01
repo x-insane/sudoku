@@ -27,7 +27,7 @@ public:
 	{
 		return _status;
 	}
-	const char* status_string() const
+	const char* status_string(bool is_show_tip = true) const
 	{
 		switch(_status)
 		{
@@ -44,7 +44,7 @@ public:
 		case Status::Win:
 			return "完成";
 		case Status::Wrong:
-			return "有错填";
+			return is_show_tip ? "有错填" : "正常";
 		}
 		return "";
 	}

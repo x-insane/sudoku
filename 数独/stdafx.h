@@ -40,6 +40,7 @@ typedef struct DrawSudokuStruct
 
 	float sfontw = 8; // Modify窗口专用
 	bool is_draw_group = true; // Modify窗口专用
+	bool is_show_tip = false; // Main窗口专用
 }DSS;
 
 enum class Status // enum class 方式 
