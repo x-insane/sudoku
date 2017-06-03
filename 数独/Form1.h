@@ -10,12 +10,12 @@ using namespace System::Drawing;
 /// <summary>
 /// Form1 ժҪ
 /// </summary>
-public ref class Form1 : public System::Windows::Forms::Form, ModifySuccess
+public ref class Form1 : public System::Windows::Forms::Form, IModify
 {
 	Admin^ f_admin;
 	int i,j;
-public:
 	SDoc^ doc;
+public:
 
 	private: System::Windows::Forms::MenuStrip^  menuStrip1;
 	private: System::Windows::Forms::ToolStripMenuItem^  mi_game;
@@ -40,23 +40,24 @@ public:
 	private: System::Windows::Forms::ToolStripMenuItem^  modifysudokuToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  fileToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  openToolStripMenuItem;
-	public: System::Windows::Forms::ToolStripMenuItem^  saveToolStripMenuItem;
+	private: System::Windows::Forms::ToolStripMenuItem^  saveToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripMenuItem^  fetchToolStripMenuItem;
 	private: System::Windows::Forms::ToolStripSeparator^  toolStripSeparator3;
 	private: System::Windows::Forms::ToolStripMenuItem^  reloadToolStripMenuItem;
 	private: System::Windows::Forms::StatusStrip^  statusStrip1;
-	public: System::Windows::Forms::ToolStripStatusLabel^  statusText;
+	private: System::Windows::Forms::ToolStripStatusLabel^  statusText;
 	private: System::Windows::Forms::ToolStripMenuItem^  mi_manage;
 
 public:
 	Form1(String^ filename);
 	Form1();
-	virtual void modify_ok();
+	void load(String^ filename);
+	virtual void modify_ok(String^ filename);
 	virtual void modify_cancel();
-	virtual SDoc^ sdoc()
+	/*virtual SDoc^ sdoc()
 	{
 		return doc;
-	}
+	}*/
 
 protected:
 	/// <summary>

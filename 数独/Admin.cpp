@@ -208,6 +208,9 @@ System::Void Admin::handle_delete(System::Object^  sender, System::EventArgs^  e
 
 System::Void Admin::handle_open(System::Object^  sender, System::EventArgs^  e)
 {
+	f_parent->load("Games\\" + listView1->SelectedItems[0]->Text);
+	Close();
+	/*
 	if (f_parent->doc->open("Games\\" + listView1->SelectedItems[0]->Text))
 	{
 		f_parent->Text = "数独 - " + listView1->SelectedItems[0]->Text;
@@ -215,17 +218,17 @@ System::Void Admin::handle_open(System::Object^  sender, System::EventArgs^  e)
 	}
 	else
 		MessageBox::Show("无法加载该数独文件！");
-	Close();
+	Close();*/
 }
 
 System::Void Admin::handle_modify(System::Object^  sender, System::EventArgs^  e)
 {
 	Enabled = false;
-	Modify^ m = gcnew Modify(this, false);
+	Modify^ m = gcnew Modify(this, "Games\\" + listView1->SelectedItems[0]->Text);
 	m->Show();
 }
 
-void Admin::modify_ok()
+void Admin::modify_ok(String^ filename)
 {
 	Enabled = true;
 	reload();

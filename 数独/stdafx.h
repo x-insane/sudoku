@@ -5,11 +5,13 @@
 // 预声明所有结构、类和接口
 ref class Form1;
 ref class Admin;
-ref class AddSudoku;
+// ref class AddSudoku;
 ref class Modify;
 ref class SDoc;
 ref class MyListView;
 class Sudoku;
+class XSudoku;
+class PSudoku;
 
 struct SD // 设计数独小格
 {
@@ -66,19 +68,21 @@ enum
 typedef const SD(*Board)[10];
 typedef const int(*Res)[10];
 
-public interface class ModifySuccess // 修改数独后请求重新载入
+public interface class IModify // 修改数独后请求重新载入
 {
-	void modify_ok();
+	void modify_ok(System::String^ filename);
 	void modify_cancel();
-	SDoc^ sdoc();
+	// SDoc^ sdoc();
 };
 
 // 预加载所有头文件
 #include "Form1.h"
-#include "AddSudoku.h"
+// #include "AddSudoku.h"
 #include "Admin.h"
 #include "Modify.h"
 
 #include "Sudoku.h"
+#include "XSudoku.h"
+#include "PSudoku.h"
 #include "SDoc.h"
 #include "MyListView.h"

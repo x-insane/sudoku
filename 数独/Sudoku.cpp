@@ -67,6 +67,15 @@ void Sudoku::init()
 	}
 }
 
+bool Sudoku::can(int x, int y, int k)
+{
+	if (data[x][y].num)
+		return false;
+	if (row[x][k] || col[y][k] || group[data[x][y].group][k])
+		return false;
+	return true;
+}
+
 Status Sudoku::set(Res res, Res group)
 {
 	memset(data, 0, sizeof(data));
@@ -128,24 +137,6 @@ Status Sudoku::scan()
 					data[i][j].range ++;
 					data[i][j].is[k] = true;
 				}
-				/*if(data[i][k].num == data[i][j].num && data[i][k].who == 1)
-				{
-					data[i][k].who = 3; // 标红该行重复数字
-					_s = _status = Status::Wrong;
-				}
-				if(data[k][j].num == data[i][j].num && data[k][j].who == 1)
-				{
-					data[k][j].who = 3; // 标红该列重复数字
-					_s = _status = Status::Wrong;
-				}
-				int n = map[data[i][j].group][k];
-				short xx = n / 10,
-					yy = n % 10;
-				if(data[xx][yy].num == data[i][j].num && data[xx][yy].who == 1)
-				{
-					data[xx][yy].who = 3; // 标红该组重复数字
-					_s = _status = Status::Wrong;
-				}*/
 			}
 			if(data[i][j].range)
 			{

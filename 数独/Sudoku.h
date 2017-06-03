@@ -2,6 +2,7 @@
 	
 class Sudoku
 {
+protected:
 	struct NMap
 	{
 		short x;
@@ -50,27 +51,24 @@ public:
 	}
 	Status set(Res res, Res group=0); // group为0时表示默认标准数独
 	Status set(Board res);
-	Status play(int x, int y, int k, bool is_solve=false);
-	Status reset();
-	Status reset(int x, int y, bool is_solve=false);
+	virtual Status play(int x, int y, int k, bool is_solve=false);
+	virtual Status reset();
+	virtual Status reset(int x, int y, bool is_solve=false);
 	Status solve(bool is_reset=false);
 	virtual void Draw(Graphics^ dc, DSS dss);
 	virtual bool Serialize(BinaryWriter^ bw);
 	virtual bool Serialize(BinaryReader^ br);
+	virtual int kind()
+	{
+		return SD_Standard;
+	}
 protected:
 	void setBoard(int x, int y, int k);
 	void setGroup(int x, int y, int g);
 	friend ref class Modify; // 允许Modify窗口对数独数据进行修改
 protected:
-	void init();
-	bool can(int x, int y, int k) // 判断x行y列能否填k
-	{
-		if(data[x][y].num)
-			return false;
-		if(row[x][k] || col[y][k] || group[data[x][y].group][k])
-			return false;
-		return true;
-	}
+	virtual void init();
+	virtual bool can(int x, int y, int k); // 判断x行y列能否填k
 	Status scan(); // 扫描并计算每个格子可填数和有n种填法的小格
 	virtual bool Callback()
 	{

@@ -1,4 +1,3 @@
-  数独.AddSudoku.resources - Embedded, ContainedInManifestFile, 
   数独.Admin.resources - Embedded, ContainedInManifestFile, 
   数独.Form1.resources - Embedded, ContainedInManifestFile, 
   数独.Modify.resources - Embedded, ContainedInManifestFile, 
@@ -17,38 +16,30 @@ Assembly System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=
 	hash=None, flags=None
 Assembly System.Xml, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
 	hash=None, flags=None
-Interface ModifySuccess: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract, BeforeFieldInit
+Interface IModify: AutoLayout, AnsiClass, Class, Public, ClassSemanticsMask, Abstract, BeforeFieldInit
   Methods:
-    modify_ok(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
+    modify_ok(String): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
     modify_cancel(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
-    sdoc(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask, Abstract
 Class Form1: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
     Void .ctor(System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Interfaces:
-    ModifySuccess
-  Fields:
-    SDoc doc : Public
-    System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem : Public
-    System.Windows.Forms.ToolStripStatusLabel statusText : Public
+    IModify
   Methods:
-    modify_ok(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    load(String): PrivateScope, Public, HideBySig
+    modify_ok(String): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
     modify_cancel(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
-    sdoc(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
-Class AddSudoku: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
-  :System.Windows.Forms.Form
-    Void .ctor(Form1): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
 Class Admin: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
     Void .ctor(Form1): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
   Interfaces:
-    ModifySuccess
+    IModify
   Methods:
     sdoc(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
-    modify_ok(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
+    modify_ok(String): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
     modify_cancel(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
     reload(): PrivateScope, Public, HideBySig
 Class Modify: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   :System.Windows.Forms.Form
-    Void .ctor(ModifySuccess, Boolean): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(IModify, System.String): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName

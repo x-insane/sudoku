@@ -11,7 +11,7 @@ using namespace System::Drawing;
 /// <summary>
 /// Admin ժҪ
 /// </summary>
-public ref class Admin : public System::Windows::Forms::Form, ModifySuccess
+public ref class Admin : public System::Windows::Forms::Form, IModify
 {
 	Form1^ f_parent;
 	array<SDoc^>^ sdList = nullptr;
@@ -27,7 +27,7 @@ public:
 		f_parent = parent;
 	}
 	virtual SDoc^ sdoc();
-	virtual void modify_ok();
+	virtual void modify_ok(String^ filename);
 	virtual void modify_cancel();
 
 protected:

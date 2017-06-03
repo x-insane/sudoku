@@ -31,9 +31,6 @@
     <ClCompile Include="Admin.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="AddSudoku.cpp">
-      <Filter>源文件</Filter>
-    </ClCompile>
     <ClCompile Include="Form1.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
@@ -44,6 +41,12 @@
       <Filter>源文件</Filter>
     </ClCompile>
     <ClCompile Include="MyListView.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="XSudoku.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PSudoku.cpp">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
@@ -57,9 +60,6 @@
     <ClInclude Include="Admin.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="AddSudoku.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="stdafx.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -70,6 +70,12 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="MyListView.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="XSudoku.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PSudoku.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

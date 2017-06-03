@@ -2,14 +2,33 @@
 #include "Modify.h"
 
 /*
-Modify::Modify(ModifySuccess^ m, Sudoku * p) : src(p), msif(m)
+Modify::Modify(IModify^ m, Sudoku * p) : src(p), msif(m)
 {
 	InitializeComponent();
 	doc = gcnew SDoc(new Sudoku(*p));
 	doc->sd()->reset();
 }*/
 
-Modify::Modify(ModifySuccess^ m, bool is) : msif(m), isnew(is)
+Modify::Modify(IModify ^ m, String ^ filename) : msif(m)
+{
+	InitializeComponent();
+	if (filename)
+		doc = gcnew SDoc(filename);
+	else
+		doc = gcnew SDoc(new Sudoku());
+	p_sd = doc->sd();
+	switch (doc->sd()->kind())
+	{
+	case SD_Percent:
+		check_P->Checked = true;
+		break;
+	case SD_X:
+		check_X->Checked = true;
+		break;
+	}
+}
+
+/*Modify::Modify(IModify^ m, bool is) : msif(m), isnew(is)
 {
 	InitializeComponent();
 	if (isnew)
@@ -28,7 +47,7 @@ Modify::Modify(ModifySuccess^ m, bool is) : msif(m), isnew(is)
 		doc = m->sdoc();
 		p_sd = new Sudoku(*doc->sd());
 	}
-}
+}*/
 
 System::Void Modify::label2_Paint(System::Object ^ sender, System::Windows::Forms::PaintEventArgs ^ e)
 {
@@ -179,21 +198,21 @@ System::Void Modify::button6_Click(System::Object ^ sender, System::EventArgs ^ 
 		MessageBox::Show("不符合要求，暂不能提交！");
 		return;
 	}
-	if (isnew)
+	if (doc->isnew())
 	{
 		SaveFileDialog^ sf = gcnew SaveFileDialog();
 		sf->Filter = L"数独文件 (*.sd)|*.sd";
 		if (sf->ShowDialog() == Windows::Forms::DialogResult::Cancel)
 			return;
 		if (doc->save(sf->FileName))
-			msif->sdoc()->open(sf->FileName);
-		msif->modify_cancel();
+			msif->modify_ok(sf->FileName);
+		else
+			msif->modify_cancel();
 	}
 	else
 	{
-		*doc->sd() = *p_sd;
 		doc->save();
-		msif->modify_ok();
+		msif->modify_ok(nullptr);
 	}
 	Close();
 }
@@ -208,5 +227,31 @@ System::Void Modify::button7_Click(System::Object ^ sender, System::EventArgs ^ 
 
 System::Void Modify::checkBox1_CheckedChanged(System::Object ^ sender, System::EventArgs ^ e)
 {
+	label2->Invalidate();
+}
+
+System::Void Modify::check_X_CheckedChanged(System::Object ^ sender, System::EventArgs ^ e)
+{
+	if (check_X->Checked)
+	{
+		check_P->Checked = false;
+		doc->changeModel(SD_X);
+	}
+	else
+		doc->changeModel(SD_Standard);
+	p_sd = doc->sd();
+	label2->Invalidate();
+}
+
+System::Void Modify::check_P_CheckedChanged(System::Object ^ sender, System::EventArgs ^ e)
+{
+	if (check_P->Checked)
+	{
+		check_X->Checked = false;
+		doc->changeModel(SD_Percent);
+	}
+	else
+		doc->changeModel(SD_Standard);
+	p_sd = doc->sd();
 	label2->Invalidate();
 }

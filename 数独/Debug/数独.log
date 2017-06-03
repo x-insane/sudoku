@@ -1,4 +1,4 @@
-﻿  Sudoku.cpp
-  AddSudoku.obj :托管的代码存在时 /DEBUG:FASTLINK 不受支持；正在重新启动与 /DEBUG:FULL 的链接
+﻿  XSudoku.cpp
+  Admin.obj :托管的代码存在时 /DEBUG:FASTLINK 不受支持；正在重新启动与 /DEBUG:FULL 的链接
   数独.vcxproj -> C:\Users\yanxu\Documents\Visual Studio 2017\Projects\数独\Debug\数独.exe
   数独.vcxproj -> C:\Users\yanxu\Documents\Visual Studio 2017\Projects\数独\Debug\数独.pdb (Partial PDB)

@@ -37,11 +37,19 @@ Form1::Form1()
 	saveToolStripMenuItem->Enabled = false;
 }
 
+void Form1::load(String ^ filename)
+{
+	doc = gcnew SDoc(filename);
+	int n = filename->LastIndexOfAny(gcnew array<wchar_t>(2) { '\\', '/' });
+	String^ s = filename->Substring(n + 1);
+	Text = "数独 - " + s;
+	statusText->Text = "已加载数独文件：" + s;
+}
+
 Form1::Form1(String^ filename)
 {
 	InitializeComponent();
-	doc = gcnew SDoc(filename);
-	saveToolStripMenuItem->Enabled = false;
+	load(filename);
 }
 
 System::Void Form1::管理ToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
@@ -188,16 +196,21 @@ System::Void Form1::answerToolStripMenuItem_Click(System::Object^  sender, Syste
 
 System::Void Form1::addsudokuToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
 {
-	Modify^ modify = gcnew Modify(this, true);
+	Modify^ modify = gcnew Modify(this, nullptr);
 	Hide();
 	modify->Show();
 }
 
 System::Void Form1::modifysudokuToolStripMenuItem_Click(System::Object ^ sender, System::EventArgs ^ e)
 {
-	Modify^ modify = gcnew Modify(this, false);
-	Hide();
-	modify->Show();
+	if (doc->getFilename())
+	{
+		Modify^ modify = gcnew Modify(this, doc->getFilename());
+		Hide();
+		modify->Show();
+	}
+	else
+		MessageBox::Show("不能修改默认数独！");
 }
 
 System::Void Form1::saveToolStripMenuItem_Click(System::Object ^ sender, System::EventArgs ^ e)
@@ -250,18 +263,21 @@ System::Void Form1::mi_is_showtip_CheckedChanged(System::Object ^ sender, System
 	statusText->Text = %String(doc->sd()->status_string(mi_is_showtip->Checked));
 }
 
-void Form1::modify_ok()
+void Form1::modify_ok(String^ filename)
 {
-	doc->reload();
+	if (filename)
+		load(filename);
+	else
+		doc->reload();
 	Show();
 }
 
 void Form1::modify_cancel()
 {
-	if (!doc->isnew())
+	/*if (!doc->isnew())
 	{
 		statusText->Text = "就绪";
 		Text = "数独 - " + doc->getFilename();
-	}
+	}*/
 	Show();
 }

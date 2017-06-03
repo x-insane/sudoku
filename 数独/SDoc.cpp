@@ -42,8 +42,10 @@ bool SDoc::open(String ^ filename)
 			p_sd = new Sudoku();
 			break;
 		case SD_X:
+			p_sd = new XSudoku();
 			break;
 		case SD_Percent:
+			p_sd = new PSudoku();
 			break;
 		}
 		if (!p_sd)
@@ -89,4 +91,20 @@ bool SDoc::save(String ^ filename)
 		MessageBox::Show(e->ToString());
 	}
 	return false;
+}
+
+void SDoc::changeModel(int model)
+{
+	switch (model)
+	{
+	case SD_Standard:
+		p_sd = new Sudoku(*p_sd);
+		break;
+	case SD_X:
+		p_sd = new XSudoku(*p_sd);
+		break;
+	case SD_Percent:
+		p_sd = new PSudoku(*p_sd);
+		break;
+	}
 }

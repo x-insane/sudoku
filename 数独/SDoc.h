@@ -29,4 +29,5 @@ public:
 			return false;
 		return open(filename);
 	}
+	void changeModel(int model);
 };

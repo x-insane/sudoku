@@ -90,19 +90,17 @@
     <None Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AddSudoku.cpp" />
     <ClCompile Include="Admin.cpp" />
     <ClCompile Include="Form1.cpp" />
     <ClCompile Include="Modify.cpp" />
     <ClCompile Include="MyListView.cpp" />
+    <ClCompile Include="PSudoku.cpp" />
     <ClCompile Include="SDoc.cpp" />
     <ClCompile Include="Sudoku.cpp" />
+    <ClCompile Include="XSudoku.cpp" />
     <ClCompile Include="数独.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AddSudoku.h">
-      <FileType>CppForm</FileType>
-    </ClInclude>
     <ClInclude Include="Admin.h">
       <FileType>CppForm</FileType>
     </ClInclude>
@@ -113,17 +111,16 @@
       <FileType>CppForm</FileType>
     </ClInclude>
     <ClInclude Include="MyListView.h" />
+    <ClInclude Include="PSudoku.h" />
     <ClInclude Include="SDoc.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="Sudoku.h" />
+    <ClInclude Include="XSudoku.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="app.rc" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="AddSudoku.resx">
-      <DependentUpon>AddSudoku.h</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Admin.resx">
       <DependentUpon>Admin.h</DependentUpon>
       <SubType>Designer</SubType>

@@ -13,14 +13,15 @@ using namespace System::Drawing;
 public ref class Modify : public System::Windows::Forms::Form
 {
 	SDoc^ doc;
-	bool isnew;
+	// bool isnew;
 	Sudoku* p_sd;
-	ModifySuccess^ msif;
+	IModify^ msif;
 private:
 	int getRadioValue();
 	void handle_modify(int x, int y, int k);
 public:
-	Modify(ModifySuccess^ m, bool isnew);
+	// Modify(IModify^ m, bool isnew);
+	Modify(IModify^ m, String^ filename);
 
 protected:
 	/// <summary>
@@ -64,6 +65,8 @@ protected:
 	private: System::Windows::Forms::Button^  button6;
 	private: System::Windows::Forms::Button^  button7;
 	private: System::Windows::Forms::CheckBox^  checkBox1;
+	private: System::Windows::Forms::CheckBox^  check_X;
+	private: System::Windows::Forms::CheckBox^  check_P;
 
 private:
 	/// <summary>
@@ -107,6 +110,8 @@ private:
 		this->button6 = (gcnew System::Windows::Forms::Button());
 		this->button7 = (gcnew System::Windows::Forms::Button());
 		this->checkBox1 = (gcnew System::Windows::Forms::CheckBox());
+		this->check_X = (gcnew System::Windows::Forms::CheckBox());
+		this->check_P = (gcnew System::Windows::Forms::CheckBox());
 		this->SuspendLayout();
 		// 
 		// label2
@@ -412,7 +417,7 @@ private:
 		// button4
 		// 
 		this->button4->AutoSize = true;
-		this->button4->Location = System::Drawing::Point(265, 423);
+		this->button4->Location = System::Drawing::Point(296, 423);
 		this->button4->Name = L"button4";
 		this->button4->Size = System::Drawing::Size(100, 31);
 		this->button4->TabIndex = 17;
@@ -425,7 +430,7 @@ private:
 		this->button5->AutoSize = true;
 		this->button5->Font = (gcnew System::Drawing::Font(L"Î¢ÈíÑÅºÚ Light", 12, System::Drawing::FontStyle::Bold));
 		this->button5->ForeColor = System::Drawing::Color::Red;
-		this->button5->Location = System::Drawing::Point(412, 448);
+		this->button5->Location = System::Drawing::Point(431, 448);
 		this->button5->Name = L"button5";
 		this->button5->Size = System::Drawing::Size(32, 31);
 		this->button5->TabIndex = 17;
@@ -438,7 +443,7 @@ private:
 		this->button6->AutoSize = true;
 		this->button6->Font = (gcnew System::Drawing::Font(L"Î¢ÈíÑÅºÚ Light", 12, System::Drawing::FontStyle::Bold));
 		this->button6->ForeColor = System::Drawing::Color::Green;
-		this->button6->Location = System::Drawing::Point(464, 448);
+		this->button6->Location = System::Drawing::Point(483, 448);
 		this->button6->Name = L"button6";
 		this->button6->Size = System::Drawing::Size(32, 31);
 		this->button6->TabIndex = 17;
@@ -449,7 +454,7 @@ private:
 		// button7
 		// 
 		this->button7->AutoSize = true;
-		this->button7->Location = System::Drawing::Point(265, 463);
+		this->button7->Location = System::Drawing::Point(296, 463);
 		this->button7->Name = L"button7";
 		this->button7->Size = System::Drawing::Size(100, 31);
 		this->button7->TabIndex = 17;
@@ -468,11 +473,35 @@ private:
 		this->checkBox1->UseVisualStyleBackColor = true;
 		this->checkBox1->CheckedChanged += gcnew System::EventHandler(this, &Modify::checkBox1_CheckedChanged);
 		// 
+		// check_X
+		// 
+		this->check_X->AutoSize = true;
+		this->check_X->Location = System::Drawing::Point(233, 433);
+		this->check_X->Name = L"check_X";
+		this->check_X->Size = System::Drawing::Size(39, 25);
+		this->check_X->TabIndex = 19;
+		this->check_X->Text = L"X";
+		this->check_X->UseVisualStyleBackColor = true;
+		this->check_X->CheckedChanged += gcnew System::EventHandler(this, &Modify::check_X_CheckedChanged);
+		// 
+		// check_P
+		// 
+		this->check_P->AutoSize = true;
+		this->check_P->Location = System::Drawing::Point(233, 463);
+		this->check_P->Name = L"check_P";
+		this->check_P->Size = System::Drawing::Size(43, 25);
+		this->check_P->TabIndex = 19;
+		this->check_P->Text = L"%";
+		this->check_P->UseVisualStyleBackColor = true;
+		this->check_P->CheckedChanged += gcnew System::EventHandler(this, &Modify::check_P_CheckedChanged);
+		// 
 		// Modify
 		// 
 		this->AutoScaleDimensions = System::Drawing::SizeF(9, 21);
 		this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 		this->ClientSize = System::Drawing::Size(537, 506);
+		this->Controls->Add(this->check_P);
+		this->Controls->Add(this->check_X);
 		this->Controls->Add(this->checkBox1);
 		this->Controls->Add(this->button6);
 		this->Controls->Add(this->button7);
@@ -528,4 +557,6 @@ private:
 	private: System::Void button6_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void button7_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void checkBox1_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void check_X_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void check_P_CheckedChanged(System::Object^  sender, System::EventArgs^  e);
 };
