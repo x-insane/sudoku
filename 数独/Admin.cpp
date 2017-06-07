@@ -4,7 +4,7 @@
 
 void Admin::InitializeComponent(void)
 {
-	// this->listView1 = (gcnew System::Windows::Forms::ListView());
+	this->listView1 = (gcnew System::Windows::Forms::ListView());
 	this->listView1 = gcnew MyListView();
 	this->SuspendLayout();
 	// 
@@ -13,6 +13,7 @@ void Admin::InitializeComponent(void)
 	this->listView1->Anchor = static_cast<System::Windows::Forms::AnchorStyles>((((System::Windows::Forms::AnchorStyles::Top | System::Windows::Forms::AnchorStyles::Bottom)
 		| System::Windows::Forms::AnchorStyles::Left)
 		| System::Windows::Forms::AnchorStyles::Right));
+	this->listView1->BackColor = System::Drawing::SystemColors::Window;
 	this->listView1->BorderStyle = System::Windows::Forms::BorderStyle::None;
 	this->listView1->Font = (gcnew System::Drawing::Font(L"宋体", 15, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 		static_cast<System::Byte>(134)));
@@ -27,7 +28,6 @@ void Admin::InitializeComponent(void)
 	this->listView1->UseCompatibleStateImageBehavior = false;
 	this->listView1->View = System::Windows::Forms::View::Tile;
 	this->listView1->DrawItem += gcnew System::Windows::Forms::DrawListViewItemEventHandler(this, &Admin::listView1_DrawItem);
-	this->listView1->KeyPress += gcnew System::Windows::Forms::KeyPressEventHandler(this, &Admin::listView1_KeyPress);
 	this->listView1->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &Admin::listView1_MouseClick);
 	this->listView1->MouseDoubleClick += gcnew System::Windows::Forms::MouseEventHandler(this, &Admin::listView1_MouseDoubleClick);
 	// 
@@ -35,6 +35,7 @@ void Admin::InitializeComponent(void)
 	// 
 	this->AutoScaleDimensions = System::Drawing::SizeF(6, 12);
 	this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
+	this->BackColor = System::Drawing::SystemColors::Window;
 	this->ClientSize = System::Drawing::Size(1121, 717);
 	this->Controls->Add(this->listView1);
 	this->Name = L"Admin";
@@ -118,19 +119,6 @@ System::Void Admin::listView1_DrawItem(System::Object ^ sender, System::Windows:
 	delete myBuffer; //释放资源
 }
 
-System::Void Admin::listView1_KeyPress(System::Object ^ sender, System::Windows::Forms::KeyPressEventArgs ^ e)
-{
-}
-
-SDoc ^ Admin::sdoc()
-{
-	if (!listView1->SelectedIndices->Count)
-		return nullptr;
-	if(sdList->Length <= listView1->SelectedIndices[0])
-		return nullptr;
-	return sdList[listView1->SelectedIndices[0]];
-}
-
 System::Void Admin::listView1_MouseClick(System::Object ^ sender, System::Windows::Forms::MouseEventArgs ^ e)
 {
 	if (e->Button == ::MouseButtons::Right && listView1->SelectedItems->Count)
@@ -210,15 +198,6 @@ System::Void Admin::handle_open(System::Object^  sender, System::EventArgs^  e)
 {
 	f_parent->load("Games\\" + listView1->SelectedItems[0]->Text);
 	Close();
-	/*
-	if (f_parent->doc->open("Games\\" + listView1->SelectedItems[0]->Text))
-	{
-		f_parent->Text = "数独 - " + listView1->SelectedItems[0]->Text;
-		f_parent->statusText->Text = "已加载数独文件：" + listView1->SelectedItems[0]->Text;
-	}
-	else
-		MessageBox::Show("无法加载该数独文件！");
-	Close();*/
 }
 
 System::Void Admin::handle_modify(System::Object^  sender, System::EventArgs^  e)

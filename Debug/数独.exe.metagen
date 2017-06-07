@@ -36,7 +36,6 @@ Class Admin: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
   Interfaces:
     IModify
   Methods:
-    sdoc(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
     modify_ok(String): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
     modify_cancel(): PrivateScope, Public, Virtual, HideBySig, VtableLayoutMask
     reload(): PrivateScope, Public, HideBySig

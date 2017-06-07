@@ -1,0 +1,8 @@
+REGEDIT
+
+HKEY_CLASSES_ROOT\.sd = TPRTP.SD
+HKEY_CLASSES_ROOT\TPRTP.SD\shell\open\command = Êý¶À.exe %1
+HKEY_CLASSES_ROOT\TPRTP.SD\shell\open\ddeexec = [open("%1")]
+HKEY_CLASSES_ROOT\TPRTP.SD\shell\open\ddeexec\application = Êý¶À
+
+HKEY_CLASSES_ROOT\TPRTP.SD = SD Document

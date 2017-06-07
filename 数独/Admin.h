@@ -26,7 +26,6 @@ public:
 		//
 		f_parent = parent;
 	}
-	virtual SDoc^ sdoc();
 	virtual void modify_ok(String^ filename);
 	virtual void modify_cancel();
 
@@ -61,7 +60,6 @@ private:
 	private: System::Void Admin_FormClosing(System::Object^  sender, System::Windows::Forms::FormClosingEventArgs^  e);
 	public: System::Void reload();
 	private: System::Void listView1_DrawItem(System::Object^  sender, System::Windows::Forms::DrawListViewItemEventArgs^  e);
-	private: System::Void listView1_KeyPress(System::Object^  sender, System::Windows::Forms::KeyPressEventArgs^  e);
 	private: System::Void listView1_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e);
 	private: System::Void listView1_MouseDoubleClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e);
 	private: System::Void handle_reload(System::Object ^ sender, System::EventArgs ^ e);
